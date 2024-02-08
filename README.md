@@ -1,2 +1,3 @@
 # covenantfoundry.com
-www.covenantfoundry.com
+
+[Production site](https://covenantfoundry.com/)
