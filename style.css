@@ -1,0 +1,51 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    /* Default font for body text */
+    background-color: #121212;
+    color: #FFFFFF;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    /* Specific font for headings */
+    margin-top: 20vh;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 4em;
+}
+
+p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 2em;
+    text-align: center;
+}
+
+.discord-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25em;
+    background-color: #5865F2;
+    /* Discord brand color */
+    color: #FFFFFF;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.discord-link:hover {
+    background-color: #4852C4;
+    /* Slightly darker shade on hover */
+}
