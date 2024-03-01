@@ -1,15 +1,37 @@
+html {
+    background-color: #121212;
+}
+
 body,
 html {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
     /* Default font for body text */
-    background-color: #121212;
     color: #FFFFFF;
+}
+
+body:before {
+    z-index: -1;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(100vw, 640px);
+    height: min(100vh, 640px);
+    background-image: url(/logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    content: "";
+    opacity: 0.2;
 }
 
 .container {
     max-width: 600px;
+    max-height: 100vh;
+    height: max-content;
+    position: absolute;
+    inset: 0;
     margin: auto;
     padding: 20px;
     text-align: center;
@@ -18,8 +40,6 @@ html {
 h1 {
     font-family: 'Playfair Display', serif;
     /* Specific font for headings */
-    margin-top: 20vh;
-    margin-bottom: 20px;
     text-align: center;
     font-size: 4em;
 }
@@ -48,4 +68,16 @@ p {
 .discord-link:hover {
     background-color: #4852C4;
     /* Slightly darker shade on hover */
+}
+
+.header {
+    /* margin-top: 20vh; */
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.header h1 {
+    margin: 0;
 }
