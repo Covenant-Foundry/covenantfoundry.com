@@ -8,73 +8,73 @@
 		/* --font-mono: here if you got it... */
 
 		/* prefixed with foreground because it should look good on the background */
-		--foreground-destructive: 345 82.7% 40.8%;
+		--foreground-destructive: 345 82.7% 40.8%; /* keeping the original color */
 
-		--background: 0 0% 100%;
-		--foreground: 222.2 84% 4.9%;
+		--background: 0 0% 7.1%; /* #121212 in HSL */
+		--foreground: 0 0% 100%; /* #ffffff in HSL */
 
-		--muted: 210 40% 93%;
-		--muted-foreground: 215.4 16.3% 30%;
+		--muted: 0 0% 18.4%; /* #2E2E2E (darker muted tone for dark background) */
+		--muted-foreground: 0 0% 70%; /* #B3B3B3 (light grey for foreground) */
 
-		--popover: 0 0% 100%;
-		--popover-foreground: 222.2 84% 4.9%;
+		--popover: 0 0% 7.1%; /* #121212 */
+		--popover-foreground: 0 0% 100%; /* #ffffff */
 
-		--card: 0 0% 100%;
-		--card-foreground: 222.2 84% 4.9%;
+		--card: 0 0% 7.1%; /* #121212 */
+		--card-foreground: 0 0% 100%; /* #ffffff */
 
-		--border: 214.3 31.8% 91.4%;
-		--input: 214.3 31.8% 91.4%;
-		--input-invalid: 0 84.2% 60.2%;
+		--border: 0 0% 25%; /* #404040 for a darker border */
+		--input: 0 0% 25%; /* #404040 */
+		--input-invalid: 0 84.2% 60.2%; /* keeping original invalid color */
 
-		--primary: 222.2 47.4% 11.2%;
-		--primary-foreground: 210 40% 98%;
+		--primary: 0 0% 7.1%; /* #121212 */
+		--primary-foreground: 0 0% 100%; /* #ffffff */
 
-		--secondary: 210 20% 83%;
-		--secondary-foreground: 222.2 47.4% 11.2%;
+		--secondary: 0 0% 100%; /* #ffffff */
+		--secondary-foreground: 0 0% 7.1%; /* #121212 */
 
-		--accent: 210 40% 90%;
-		--accent-foreground: 222.2 47.4% 11.2%;
+		--accent: 30 96% 55%; /* #fc861d in HSL */
+		--accent-foreground: 0 0% 7.1%; /* #121212 */
 
-		--destructive: 0 70% 50%;
-		--destructive-foreground: 210 40% 98%;
+		--destructive: 0 70% 50%; /* keeping original red */
+		--destructive-foreground: 0 0% 100%; /* #ffffff */
 
-		--ring: 215 20.2% 65.1%;
+		--ring: 229 69% 61%; /* #5865f2 in HSL (discord color) */
 
 		--radius: 0.5rem;
 	}
 
 	.dark {
-		--background: 222.2 84% 4.9%;
-		--foreground: 210 40% 98%;
+		--background: 0 0% 7.1%; /* #121212 */
+		--foreground: 0 0% 100%; /* #ffffff */
 
 		/* prefixed with foreground because it should look good on the background */
-		--foreground-destructive: -4 84% 60%;
+		--foreground-destructive: -4 84% 60%; /* original dark mode destructive color */
 
-		--muted: 217.2 32.6% 12%;
-		--muted-foreground: 215 20.2% 65.1%;
+		--muted: 0 0% 18.4%; /* #2E2E2E */
+		--muted-foreground: 0 0% 70%; /* #B3B3B3 */
 
-		--popover: 222.2 84% 4.9%;
-		--popover-foreground: 210 40% 98%;
+		--popover: 0 0% 7.1%; /* #121212 */
+		--popover-foreground: 0 0% 100%; /* #ffffff */
 
-		--card: 222.2 84% 4.9%;
-		--card-foreground: 210 40% 98%;
+		--card: 0 0% 7.1%; /* #121212 */
+		--card-foreground: 0 0% 100%; /* #ffffff */
 
-		--border: 217.2 32.6% 17.5%;
-		--input: 217.2 32.6% 17.5%;
-		--input-invalid: 0 62.8% 30.6%;
+		--border: 0 0% 25%; /* #404040 */
+		--input: 0 0% 25%; /* #404040 */
+		--input-invalid: 0 62.8% 30.6%; /* original invalid color */
 
-		--primary: 210 40% 98%;
-		--primary-foreground: 222.2 47.4% 11.2%;
+		--primary: 0 0% 100%; /* #ffffff */
+		--primary-foreground: 0 0% 7.1%; /* #121212 */
 
-		--secondary: 217.2 20% 24%;
-		--secondary-foreground: 210 40% 98%;
+		--secondary: 0 0% 18.4%; /* #2E2E2E */
+		--secondary-foreground: 0 0% 100%; /* #ffffff */
 
-		--accent: 217.2 32.6% 10%;
-		--accent-foreground: 210 40% 98%;
+		--accent: 30 96% 55%; /* #fc861d in HSL */
+		--accent-foreground: 0 0% 7.1%; /* #121212 */
 
-		--destructive: 0 60% 40%;
-		--destructive-foreground: 0 85.7% 97.3%;
+		--destructive: 0 60% 40%; /* original dark mode destructive color */
+		--destructive-foreground: 0 85.7% 97.3%; /* original light foreground color */
 
-		--ring: 217.2 32.6% 60%;
+		--ring: 229 69% 61%; /* #5865f2 in HSL */
 	}
 }

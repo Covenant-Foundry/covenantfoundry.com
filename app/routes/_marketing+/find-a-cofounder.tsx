@@ -1,13 +1,25 @@
-import { type MetaFunction } from '@remix-run/node'
-
-export const meta: MetaFunction = () => [{ title: 'Covenant Foundry' }]
+import { Link } from '@remix-run/react'
 
 export default function Index() {
 	return (
 		<main className="flex flex-col items-center">
-			<p className="mx-auto my-12 max-w-3xl px-3 text-center text-2xl">
-				A community of Christians pursuing faithful stewardship of our time,
-				talents, and treasures via entrepreneurship.
+			<h1 className="text-center text-3xl font-bold">Find a Co-founder</h1>
+			<p className="mx-auto my-4 max-w-3xl px-3 text-center text-body-lg">
+				A good co-founder can make all the difference for a successful business.
+				But finding someone who has the right skills <em>and</em> is aligned
+				with your Christian worldview is tough.
+			</p>
+			<p className="mx-auto my-4 max-w-3xl px-3 text-center text-body-lg">
+				Join our Discord server and introduce yourself in our{' '}
+				<Link
+					to="https://discordapp.com/channels/1204923985498996746/1284558421047119952"
+					className="text-accent underline-offset-4 hover:underline"
+					target="_blank"
+				>
+					#find-a-cofounder
+				</Link>{' '}
+				channel. Get to know other founders who share your values, and find
+				opportunities to collaborate!
 			</p>
 
 			<div className="my-8 flex flex-wrap justify-center gap-4">
@@ -26,12 +38,6 @@ export default function Index() {
 						/>
 					</svg>
 					Join the Discord
-				</a>
-				<a
-					href="/find-a-cofounder"
-					className="rounded border-2 border-accent bg-transparent px-6 py-3 font-bold text-accent transition-opacity duration-300 hover:opacity-90"
-				>
-					Find a Co-founder
 				</a>
 			</div>
 		</main>
