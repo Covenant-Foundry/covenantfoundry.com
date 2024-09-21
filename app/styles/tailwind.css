@@ -38,7 +38,7 @@
 		--destructive: 0 70% 50%; /* keeping original red */
 		--destructive-foreground: 0 0% 100%; /* #ffffff */
 
-		--ring: 229 69% 61%; /* #5865f2 in HSL (discord color) */
+		--ring: 30 96% 55%; /* #fc861d in HSL */
 
 		--radius: 0.5rem;
 	}
@@ -75,6 +75,6 @@
 		--destructive: 0 60% 40%; /* original dark mode destructive color */
 		--destructive-foreground: 0 85.7% 97.3%; /* original light foreground color */
 
-		--ring: 229 69% 61%; /* #5865f2 in HSL */
+		--ring: 30 96% 55%; /* #fc861d in HSL */
 	}
 }

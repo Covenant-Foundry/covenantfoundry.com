@@ -148,7 +148,7 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "remix-flat-routes": "^0.6.5",
     "tsx": "^4.16.2",
-    "typescript": "^5.5.3",
+    "typescript": "^5.6.2",
     "vite": "^5.3.4",
     "vitest": "^2.0.3"
   },

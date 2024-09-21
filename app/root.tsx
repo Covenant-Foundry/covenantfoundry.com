@@ -21,7 +21,6 @@ import { withSentry } from '@sentry/remix'
 import { useRef } from 'react'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import appleTouchIconAssetUrl from './assets/favicons/apple-touch-icon.png'
-import faviconAssetUrl from './assets/favicons/favicon.svg'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { EpicProgress } from './components/progress-bar.tsx'
 import { SearchBar } from './components/search-bar.tsx'
@@ -60,7 +59,6 @@ export const links: LinksFunction = () => {
 			href: '/favicon.ico',
 			sizes: '48x48',
 		},
-		{ rel: 'icon', type: 'image/svg+xml', href: faviconAssetUrl },
 		{ rel: 'apple-touch-icon', href: appleTouchIconAssetUrl },
 		{
 			rel: 'manifest',
@@ -74,8 +72,15 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	return [
-		{ title: data ? 'Epic Notes' : 'Error | Epic Notes' },
-		{ name: 'description', content: `Your own captain's log` },
+		{ title: data ? 'Covenant Foundry' : 'Error | Covenant Foundry' },
+		{
+			name: 'description',
+			content: `A community of Christians pursuing faithful stewardship of our time, talents, and treasures via entrepreneurship.`,
+		},
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
 	]
 }
 
