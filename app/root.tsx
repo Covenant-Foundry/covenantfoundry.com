@@ -63,6 +63,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const honeyProps = honeypot.getInputProps();
+  const ogUrl = new URL(request.url);
 
   return json({
     requestInfo: {
@@ -70,6 +71,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
     },
+    ogUrl,
     ENV: getEnv(),
     honeyProps,
   });
@@ -87,11 +89,13 @@ function Document({
   nonce,
   env = {},
   allowIndexing = true,
+  ogUrl,
 }: {
   children: React.ReactNode;
   nonce: string;
   env?: Record<string, string>;
   allowIndexing?: boolean;
+  ogUrl?: string;
 }) {
   return (
     <html lang="en" className={`dark h-full overflow-x-hidden`}>
@@ -102,6 +106,12 @@ function Document({
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         {allowIndexing ? null : (
           <meta name="robots" content="noindex, nofollow" />
+        )}
+        {ogUrl && (
+          <>
+            <meta property="og:url" content={ogUrl} />
+            <meta name="twitter:url" content={ogUrl} />
+          </>
         )}
         <Links />
       </head>
@@ -126,7 +136,7 @@ function App() {
   const allowIndexing = data.ENV.ALLOW_INDEXING !== "false";
 
   return (
-    <Document nonce={nonce} allowIndexing={allowIndexing} env={data.ENV}>
+    <Document nonce={nonce} allowIndexing={allowIndexing} env={data.ENV} ogUrl={data.ogUrl}>
       <div className="flex h-screen flex-col justify-between">
         <header className="container py-6">
           <nav className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap md:gap-8">
