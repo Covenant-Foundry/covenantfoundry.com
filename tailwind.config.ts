@@ -1,9 +1,9 @@
+import typographyPlugin from "@tailwindcss/typography";
 import { type Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 import radixPlugin from "tailwindcss-radix";
 import { marketingPreset } from "./app/styles/tailwind-preset.ts";
 import { extendedTheme } from "./app/utils/extended-theme.ts";
-import typographyPlugin from "@tailwindcss/typography";
 
 export default {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],

@@ -1,5 +1,5 @@
-import { DiscordLink } from "~/components/discord-link";
 import { type MetaFunction } from "@remix-run/node";
+import { DiscordLink } from "~/components/discord-link";
 
 export const meta: MetaFunction = () => [{ title: "Covenant Foundry" }];
 

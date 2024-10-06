@@ -1,12 +1,11 @@
 import {
   json,
-  type LoaderFunctionArgs,
   type HeadersFunction,
   type LinksFunction,
+  type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
 import {
-  Form,
   Link,
   Links,
   Meta,
@@ -14,20 +13,18 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useMatches,
-  useSubmit,
 } from "@remix-run/react";
 import { withSentry } from "@sentry/remix";
 import { HoneypotProvider } from "remix-utils/honeypot/react";
 import appleTouchIconAssetUrl from "./assets/favicons/apple-touch-icon.png";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
+import backgroundStyleSheetUrl from "./styles/background.css?url";
 import tailwindStyleSheetUrl from "./styles/tailwind.css?url";
 import { ClientHintCheck, getHints } from "./utils/client-hints.tsx";
 import { getEnv } from "./utils/env.server.ts";
 import { honeypot } from "./utils/honeypot.server.ts";
 import { getDomainUrl } from "./utils/misc.tsx";
 import { useNonce } from "./utils/nonce-provider.ts";
-import backgroundStyleSheetUrl from "./styles/background.css?url";
 
 export const links: LinksFunction = () => {
   return [
@@ -136,7 +133,12 @@ function App() {
   const allowIndexing = data.ENV.ALLOW_INDEXING !== "false";
 
   return (
-    <Document nonce={nonce} allowIndexing={allowIndexing} env={data.ENV} ogUrl={data.ogUrl}>
+    <Document
+      nonce={nonce}
+      allowIndexing={allowIndexing}
+      env={data.ENV}
+      ogUrl={data.ogUrl}
+    >
       <div className="flex h-screen flex-col justify-between">
         <header className="container py-6">
           <nav className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap md:gap-8">
