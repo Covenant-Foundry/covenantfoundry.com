@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		/* --font-sans: here if you have one */
+		/* --font-mono: here if you got it... */
+
+		/* prefixed with foreground because it should look good on the background */
+		--foreground-destructive: 345 82.7% 40.8%; /* keeping the original color */
+
+		--background: 0 0% 7.1%; /* #121212 in HSL */
+		--foreground: 0 0% 100%; /* #ffffff in HSL */
+
+		--muted: 0 0% 18.4%; /* #2E2E2E (darker muted tone for dark background) */
+		--muted-foreground: 0 0% 70%; /* #B3B3B3 (light grey for foreground) */
+
+		--popover: 0 0% 7.1%; /* #121212 */
+		--popover-foreground: 0 0% 100%; /* #ffffff */
+
+		--card: 0 0% 7.1%; /* #121212 */
+		--card-foreground: 0 0% 100%; /* #ffffff */
+
+		--border: 0 0% 25%; /* #404040 for a darker border */
+		--input: 0 0% 25%; /* #404040 */
+		--input-invalid: 0 84.2% 60.2%; /* keeping original invalid color */
+
+		--primary: 0 0% 7.1%; /* #121212 */
+		--primary-foreground: 0 0% 100%; /* #ffffff */
+
+		--secondary: 0 0% 100%; /* #ffffff */
+		--secondary-foreground: 0 0% 7.1%; /* #121212 */
+
+		--accent: 30 96% 55%; /* #fc861d in HSL */
+		--accent-foreground: 0 0% 7.1%; /* #121212 */
+
+		--destructive: 0 70% 50%; /* keeping original red */
+		--destructive-foreground: 0 0% 100%; /* #ffffff */
+
+		--ring: 30 96% 55%; /* #fc861d in HSL */
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 0 0% 7.1%; /* #121212 */
+		--foreground: 0 0% 100%; /* #ffffff */
+
+		/* prefixed with foreground because it should look good on the background */
+		--foreground-destructive: -4 84% 60%; /* original dark mode destructive color */
+
+		--muted: 0 0% 18.4%; /* #2E2E2E */
+		--muted-foreground: 0 0% 70%; /* #B3B3B3 */
+
+		--popover: 0 0% 7.1%; /* #121212 */
+		--popover-foreground: 0 0% 100%; /* #ffffff */
+
+		--card: 0 0% 7.1%; /* #121212 */
+		--card-foreground: 0 0% 100%; /* #ffffff */
+
+		--border: 0 0% 25%; /* #404040 */
+		--input: 0 0% 25%; /* #404040 */
+		--input-invalid: 0 62.8% 30.6%; /* original invalid color */
+
+		--primary: 0 0% 100%; /* #ffffff */
+		--primary-foreground: 0 0% 7.1%; /* #121212 */
+
+		--secondary: 0 0% 18.4%; /* #2E2E2E */
+		--secondary-foreground: 0 0% 100%; /* #ffffff */
+
+		--accent: 30 96% 55%; /* #fc861d in HSL */
+		--accent-foreground: 0 0% 7.1%; /* #121212 */
+
+		--destructive: 0 60% 40%; /* original dark mode destructive color */
+		--destructive-foreground: 0 85.7% 97.3%; /* original light foreground color */
+
+		--ring: 30 96% 55%; /* #fc861d in HSL */
+	}
+}
