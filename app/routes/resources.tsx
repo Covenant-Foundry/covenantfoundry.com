@@ -1,9 +1,10 @@
 import { Outlet } from "@remix-run/react";
+import { Prose } from "~/components/prose";
 
 export default function Resources() {
   return (
-    <main className="mx-auto max-w-3xl prose dark:prose-invert">
+    <Prose>
       <Outlet />
-    </main>
+    </Prose>
   );
 }

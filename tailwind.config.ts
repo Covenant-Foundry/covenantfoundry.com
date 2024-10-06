@@ -16,7 +16,9 @@ export default {
         "2xl": "1400px",
       },
     },
-    extend: extendedTheme,
+    extend: {
+      ...extendedTheme,
+    },
   },
   presets: [marketingPreset],
   plugins: [animatePlugin, radixPlugin, typographyPlugin],
