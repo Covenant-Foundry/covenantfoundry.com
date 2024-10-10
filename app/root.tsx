@@ -139,14 +139,14 @@ function App() {
       env={data.ENV}
       ogUrl={data.ogUrl}
     >
-      <div className="flex h-screen flex-col justify-between">
-        <header className="container py-6">
+      <div className="flex h-screen flex-col">
+        <header className="container mt-auto">
           <nav className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap md:gap-8">
             <Logo />
           </nav>
         </header>
 
-        <div className="flex-1">
+        <div className="mb-auto">
           <Outlet />
         </div>
       </div>
