@@ -6,15 +6,39 @@ meta:
 
 import { AILevel } from "../../components/ai-level";
 import { formatFrontmatterToRemixMeta } from "../../utils/meta";
+import { ResourceCard } from "../../components/resources/resource-card";
+import { ResourceGrid } from "../../components/resources/resource-grid";
+
 export const meta = formatFrontmatterToRemixMeta(frontmatter);
 
 # Books for Christian Entrepreneurs
 
 ## Inspiration
 
-- [Zero to One (Peter Thiel)](https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/)
+<ResourceGrid>
+  <ResourceCard 
+    resource={{
+      title: "Zero to One",
+      description: "Notes on Startups, or How to Build the Future",
+      category: "Inspiration",
+      tags: ["Entrepreneurship", "Inspiration"],
+      link: "https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/",
+      imageUrl: "https://m.media-amazon.com/images/I/51zGCdRQXOL._SL1200_.jpg"
+    }}
+    />
+</ResourceGrid>
 
 ## Business
 
-- [Venture Deals (Brad Feld, Jason Mendelson)](https://www.amazon.com/Venture-Deals-Smarter-Lawyer-Capitalist/dp/1119594820/)
-
+<ResourceGrid>
+  <ResourceCard 
+    resource={{
+      title: "Venture Deals",
+      description: "A handbook of agile software craftsmanship",
+      category: "Programming",
+      tags: ["Software", "Best Practices"],
+      link: "https://example.com",
+      imageUrl: "https://m.media-amazon.com/images/I/71uAXl4fuJL._SY466_.jpg"
+    }}
+    />
+</ResourceGrid>

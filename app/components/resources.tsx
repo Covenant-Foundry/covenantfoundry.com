@@ -25,7 +25,7 @@ const resources: {
 
 export function Resources() {
   return (
-    <nav className="flex flex-col items-stretch justify-stretch gap-10 mt-10">
+    <nav className="flex flex-col items-stretch justify-stretch gap-10 mt-10 max-w-[65ch] mx-auto">
       {resources.map((resource) => (
         <Link
           key={resource.to}

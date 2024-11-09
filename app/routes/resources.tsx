@@ -3,8 +3,8 @@ import { Prose } from "~/components/prose";
 
 export default function Resources() {
   return (
-    <div className="container mx-auto">
-      <Prose>
+    <div className="container mx-auto pb-5">
+      <Prose className="max-w-full">
         <Outlet />
       </Prose>
     </div>
