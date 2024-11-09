@@ -17,6 +17,8 @@ import {
 import { withSentry } from "@sentry/remix";
 import { HoneypotProvider } from "remix-utils/honeypot/react";
 import appleTouchIconAssetUrl from "./assets/favicons/apple-touch-icon.png";
+import { CTAButton } from "./components/cta-button.tsx";
+import { DiscordLink } from "./components/discord-link.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 import backgroundStyleSheetUrl from "./styles/background.css?url";
 import tailwindStyleSheetUrl from "./styles/tailwind.css?url";
@@ -139,14 +141,23 @@ function App() {
       env={data.ENV}
       ogUrl={data.ogUrl}
     >
-      <div className="flex h-screen flex-col">
-        <header className="container mt-auto">
-          <nav className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap md:gap-8">
+      <div className="flex flex-col h-screen">
+        <header>
+          <nav className="flex flex-wrap items-center justify-between gap-4 sm:flex-nowrap md:gap-8 md:mx-8">
             <Logo />
+            <div className="flex gap-4">
+              <CTAButton className="text-xl" to="/find-a-cofounder">
+                Find a Co-founder
+              </CTAButton>
+              <CTAButton className="text-xl" to="/resources">
+                Resources
+              </CTAButton>
+              <DiscordLink />
+            </div>
           </nav>
         </header>
 
-        <div className="mb-auto">
+        <div className="flex flex-1">
           <Outlet />
         </div>
       </div>
