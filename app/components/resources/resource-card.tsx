@@ -25,7 +25,7 @@ export function ResourceCard({
   );
   return (
     <div className="flex flex-row gap-2 max-w-sm bg-white/10">
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col justify-center">
         {resource.link ? <Link to={resource.link}>{image}</Link> : image}
       </div>
       <div className="flex-1 flex flex-col gap-2 justify-between p-2">
