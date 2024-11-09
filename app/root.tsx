@@ -20,6 +20,7 @@ import appleTouchIconAssetUrl from "./assets/favicons/apple-touch-icon.png";
 import { CTAButton } from "./components/cta-button.tsx";
 import { DiscordLink } from "./components/discord-link.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
+import { Icon } from "./components/ui/icon.tsx";
 import backgroundStyleSheetUrl from "./styles/background.css?url";
 import tailwindStyleSheetUrl from "./styles/tailwind.css?url";
 import { ClientHintCheck, getHints } from "./utils/client-hints.tsx";
@@ -143,18 +144,15 @@ function App() {
     >
       <div className="flex flex-col h-screen">
         <header>
-          <nav className="flex flex-wrap items-center justify-between gap-4 sm:flex-nowrap md:gap-8 md:mx-8">
-            <Logo />
-            <div className="flex gap-4">
-              <CTAButton className="text-xl" to="/find-a-cofounder">
-                Find a Co-founder
-              </CTAButton>
-              <CTAButton className="text-xl" to="/resources">
-                Resources
-              </CTAButton>
-              <DiscordLink />
-            </div>
-          </nav>
+          <NavMenu>
+            <CTAButton className="text-xl" to="/find-a-cofounder">
+              Find a Co-founder
+            </CTAButton>
+            <CTAButton className="text-xl" to="/resources">
+              Resources
+            </CTAButton>
+            <DiscordLink />
+          </NavMenu>
         </header>
 
         <div className="flex flex-1">
@@ -165,11 +163,46 @@ function App() {
   );
 }
 
+export function NavMenu({ children }: { children: React.ReactNode }) {
+  return (
+    <nav className="flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-between gap-4 lg:gap-8 mx-8">
+      <input type="checkbox" id="nav-toggle" className="hidden peer" />
+      <div className="flex peer-checked:hidden lg:flex-1 flex-shrink flex-nowrap items-center justify-between gap-4 w-full lg:w-auto">
+        <Logo />
+        <label
+          htmlFor="nav-toggle"
+          className="lg:hidden p-2 cursor-pointer text-3xl"
+          aria-label="Toggle menu"
+        >
+          <Icon name="hamburger" />
+        </label>
+      </div>
+      <div className="hidden peer-checked:flex lg:flex-1 flex-nowrap flex-shrink items-center justify-between gap-4 w-full lg:w-auto">
+        <Logo />
+        <label
+          htmlFor="nav-toggle"
+          className="lg:hidden p-2 cursor-pointer text-3xl"
+          aria-label="Toggle menu"
+        >
+          <Icon name="close" />
+        </label>
+      </div>
+      <div className="hidden peer-checked:flex lg:flex flex-col items-end gap-4 w-full lg:w-auto pb-8 mb-8 lg:mb-0 lg:pb-0 border-b-2 border-b-accent lg:border-b-0">
+        <div className="flex flex-col lg:flex-row gap-4">{children}</div>
+      </div>
+    </nav>
+  );
+}
+
 function Logo() {
   return (
     <Link to="/" className="flex items-center gap-4 my-6">
-      <img src="/img/logo.png" alt="Covenant Foundry logo" className="h-24" />
-      <div className="text-5xl font-bold">Covenant Foundry</div>
+      <img
+        src="/img/logo.png"
+        alt="Covenant Foundry logo"
+        className="h-16 md:h-24"
+      />
+      <div className="text-3xl md:text-5xl font-bold">Covenant Foundry</div>
     </Link>
   );
 }

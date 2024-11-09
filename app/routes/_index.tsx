@@ -29,17 +29,18 @@ const resources: {
 
 export default function Index() {
   return (
-    <div className="flex flex-row gap-12 flex-1 justify-center">
-      <div className="flex flex-col items-center justify-center gap-10 my-20">
-        <div className="text-center text-3xl mx-20 w-[600px]">
+    <div className="flex flex-row flex-wrap gap-20 flex-1 justify-center">
+      <div className="flex flex-col items-center justify-center gap-10 mt-20 lg:my-20">
+        <div className="text-center text-2xl md:text-3xl mx-10 md:mx-20 max-w-[600px]">
           A community of Christians pursuing faithful stewardship of our time,
           talents, and treasures via entrepreneurship.
         </div>
         <DiscordLink className="text-2xl" />
       </div>
-
-      <div className="flex flex-row items-center justify-center gap-10">
-        <nav className="flex flex-col items-stretch justify-stretch gap-10">
+      <div className="flex flex-col items-center justify-center mb-20 lg:my-20">
+        <h2 className="text-3xl font-bold">Resources for</h2>
+        <h2 className="text-3xl font-bold">Christian Entrepreneurs</h2>
+        <nav className="flex flex-col items-stretch justify-stretch gap-10 mt-10">
           {resources.map((resource) => (
             <Link
               key={resource.to}
