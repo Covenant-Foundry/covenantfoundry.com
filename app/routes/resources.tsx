@@ -3,8 +3,10 @@ import { Prose } from "~/components/prose";
 
 export default function Resources() {
   return (
-    <Prose>
-      <Outlet />
-    </Prose>
+    <div className="container mx-auto">
+      <Prose>
+        <Outlet />
+      </Prose>
+    </div>
   );
 }

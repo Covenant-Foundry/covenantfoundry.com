@@ -1,31 +1,8 @@
 import { type MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
 import { DiscordLink } from "~/components/discord-link";
-import { Icon, type IconName } from "~/components/ui/icon";
+import { Resources } from "~/components/resources";
 
 export const meta: MetaFunction = () => [{ title: "Covenant Foundry" }];
-
-const resources: {
-  title: string;
-  icon: IconName;
-  to: string;
-}[] = [
-  {
-    title: "Books",
-    icon: "book",
-    to: "/resources/books",
-  },
-  {
-    title: "Communities",
-    icon: "people-group",
-    to: "/resources/communities",
-  },
-  {
-    title: "Services",
-    icon: "handshake",
-    to: "/resources/services",
-  },
-];
 
 export default function Index() {
   return (
@@ -40,22 +17,7 @@ export default function Index() {
       <div className="flex flex-col items-center justify-center mb-20 lg:my-20">
         <h2 className="text-3xl font-bold">Resources for</h2>
         <h2 className="text-3xl font-bold">Christian Entrepreneurs</h2>
-        <nav className="flex flex-col items-stretch justify-stretch gap-10 mt-10">
-          {resources.map((resource) => (
-            <Link
-              key={resource.to}
-              className="mx-10 pe-5 font-bold transition-opacity duration-300 no-underline text-3xl border-0 bg-transparent hover:bg-accent/20 flex flex-row items-center"
-              to={resource.to}
-            >
-              <Icon
-                name={resource.icon}
-                className="p-5 mr-3 border-r-4 border-r-accent w-[3em] h-[3em]"
-              >
-                {resource.title}
-              </Icon>
-            </Link>
-          ))}
-        </nav>
+        <Resources />
       </div>
     </div>
   );
