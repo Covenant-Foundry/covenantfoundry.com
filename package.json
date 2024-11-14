@@ -25,6 +25,7 @@
     "crypto-js": "^4.2.0",
     "execa": "^9.5.1",
     "isbot": "^4.1.0",
+    "mdx-bundler": "^10.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-pretty-code": "^0.14.0",
