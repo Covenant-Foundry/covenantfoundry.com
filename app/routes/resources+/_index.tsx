@@ -1,5 +1,6 @@
 import { type MetaFunction } from "@remix-run/node";
 import { Resources } from "../../components/resources";
+import { Prose } from "~/components/prose";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,9 +11,9 @@ export const meta: MetaFunction = () => {
 
 export default function ResourcesPage() {
   return (
-    <main>
+    <Prose className="mx-8 max-w-full pb-5">
       <h1>Resources</h1>
       <Resources />
-    </main>
+    </Prose>
   );
 }

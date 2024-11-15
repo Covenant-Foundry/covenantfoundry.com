@@ -7,6 +7,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
+import { Prose } from "~/components/prose";
 import { Tags } from "~/components/ui/tags";
 import { books } from "~/data/books";
 import { notFound } from "~/utils/notfound";
@@ -33,7 +34,7 @@ export default function Book() {
   const { book, content } = useLoaderData<typeof loader>();
   const Content = useMemo(() => getMDXComponent(content.code), [content.code]);
   return (
-    <div className="max-w-4xl mx-auto">
+    <Prose className="max-w-4xl mx-auto">
       <div className="flex flex-row gap-10">
         <img
           src={book.imageUrl}
@@ -62,6 +63,6 @@ export default function Book() {
           </div>
         </div>
       </div>
-    </div>
+    </Prose>
   );
 }

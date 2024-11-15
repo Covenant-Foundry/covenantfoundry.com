@@ -3,6 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { ResourceCard } from "../../components/resources/resource-card";
 import { ResourceGrid } from "../../components/resources/resource-grid";
 import { books } from "../../data/books";
+import { Prose } from "~/components/prose";
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,7 +26,7 @@ export const loader = async () => {
 export default function BooksIndex() {
   const { booksByCategory, categories } = useLoaderData<typeof loader>();
   return (
-    <div>
+    <Prose className="mx-8 max-w-full pb-5">
       <h1>Books for Christian Entrepreneurs</h1>
 
       {categories.map((category) => (
@@ -42,6 +43,6 @@ export default function BooksIndex() {
           </ResourceGrid>
         </section>
       ))}
-    </div>
+    </Prose>
   );
 }

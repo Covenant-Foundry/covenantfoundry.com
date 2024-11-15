@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <Prose>
+    <Prose className="mx-8 max-w-full pb-5">
       <h1>Find a Co-founder</h1>
       <p>
         A good co-founder can make all the difference for a successful business.

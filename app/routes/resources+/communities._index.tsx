@@ -3,6 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { ResourceCard } from "../../components/resources/resource-card";
 import { ResourceGrid } from "../../components/resources/resource-grid";
 import { communities } from "../../data/communities";
+import { Prose } from "~/components/prose";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,7 +29,7 @@ export const loader = async () => {
 export default function CommunitiesIndex() {
   const { communitiesByCategory, categories } = useLoaderData<typeof loader>();
   return (
-    <div>
+    <Prose className="mx-8 max-w-full pb-5">
       <h1>Communities for Christian Entrepreneurs</h1>
 
       {categories.map((category) => (
@@ -45,6 +46,6 @@ export default function CommunitiesIndex() {
           </ResourceGrid>
         </section>
       ))}
-    </div>
+    </Prose>
   );
 }
