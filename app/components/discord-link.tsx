@@ -1,8 +1,13 @@
-export function DiscordLink() {
+import { cn } from "~/utils/misc";
+
+export function DiscordLink({ className }: { className?: string }) {
   return (
     <a
       href="https://discord.gg/JcWQNBXH42"
-      className="flex items-center rounded bg-[#5865f2] px-6 py-3 font-bold text-white transition-opacity duration-300 hover:opacity-90 no-underline"
+      className={cn(
+        "flex items-center rounded bg-[#5865f2] px-6 py-3 font-bold text-white transition-opacity duration-300 hover:opacity-90 no-underline",
+        className
+      )}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

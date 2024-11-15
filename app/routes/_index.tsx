@@ -1,25 +1,24 @@
 import { type MetaFunction } from "@remix-run/node";
 import { DiscordLink } from "~/components/discord-link";
+import { Resources } from "~/components/resources";
 
 export const meta: MetaFunction = () => [{ title: "Covenant Foundry" }];
 
 export default function Index() {
   return (
-    <main className="mx-auto max-w-2xl items-center px-3 prose dark:prose-invert">
-      <p className="text-center md:mb-12 text-xl md:text-2xl">
-        A community of Christians pursuing faithful stewardship of our time,
-        talents, and treasures via entrepreneurship.
-      </p>
-
-      <div className="flex flex-wrap justify-center gap-4">
-        <DiscordLink />
-        <a
-          href="/find-a-cofounder"
-          className="rounded border-2 border-accent bg-transparent px-6 py-3 font-bold text-accent transition-opacity duration-300 hover:opacity-90 no-underline"
-        >
-          Find a Co-founder
-        </a>
+    <div className="flex flex-row flex-wrap gap-20 flex-1 justify-center">
+      <div className="flex flex-col items-center justify-center gap-10 mt-20 lg:my-20">
+        <div className="text-center text-2xl md:text-3xl mx-10 md:mx-20 max-w-[600px]">
+          A community of Christians pursuing faithful stewardship of our time,
+          talents, and treasures via entrepreneurship.
+        </div>
+        <DiscordLink className="text-2xl" />
       </div>
-    </main>
+      <div className="flex flex-col items-center justify-center mb-20 lg:my-20">
+        <h2 className="text-3xl font-bold">Resources for</h2>
+        <h2 className="text-3xl font-bold">Christian Entrepreneurs</h2>
+        <Resources />
+      </div>
+    </div>
   );
 }
