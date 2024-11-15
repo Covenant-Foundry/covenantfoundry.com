@@ -16,7 +16,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <Prose>
+    <Prose className="mx-auto max-w-4xl py-10">
       <h1>AI Disclosures</h1>
       <p>
         Some of the content on this site is written with the help of AI, though

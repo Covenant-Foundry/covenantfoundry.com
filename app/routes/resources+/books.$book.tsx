@@ -34,7 +34,7 @@ export default function Book() {
   const { book, content } = useLoaderData<typeof loader>();
   const Content = useMemo(() => getMDXComponent(content.code), [content.code]);
   return (
-    <Prose className="max-w-4xl mx-auto">
+    <Prose className="mx-auto max-w-4xl py-10">
       <div className="flex flex-row gap-10">
         <img
           src={book.imageUrl}
