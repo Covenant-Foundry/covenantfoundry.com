@@ -27,13 +27,13 @@ export function ResourceCard({
 }) {
   const link = "slug" in resource ? `${root}/${resource.slug}` : resource.link;
   return (
-    <div className="flex flex-row gap-2 max-w-sm bg-white/10">
+    <div className="flex flex-row gap-2 w-md bg-white/10">
       <div className="flex-1 flex flex-col justify-center items-center">
-        <Link to={link}>
+        <Link to={link} className="h-full">
           <img
             src={resource.imageUrl}
             alt={resource.title}
-            className="m-0 object-cover"
+            className="m-0 h-full object-cover"
           />
         </Link>
       </div>

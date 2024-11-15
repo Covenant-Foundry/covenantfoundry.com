@@ -12,7 +12,7 @@ export default function ServicesPage() {
   return (
     <Prose className="mx-8 max-w-full pb-5">
       <h1>Services for Christian Entrepreneurs</h1>
-      <p>Under Construction - come back soon!</p>
+      <p><em>Coming soon!</em></p>
     </Prose>
   );
 }
