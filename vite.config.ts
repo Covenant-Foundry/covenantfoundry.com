@@ -1,12 +1,12 @@
+import mdx from '@mdx-js/rollup'
 import { vitePlugin as remix } from '@remix-run/dev'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { glob } from 'glob'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { flatRoutes } from 'remix-flat-routes'
 import { defineConfig } from 'vite'
 import { envOnlyMacros } from 'vite-env-only'
-import mdx from "@mdx-js/rollup";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 const MODE = process.env.NODE_ENV
 
@@ -37,7 +37,7 @@ export default defineConfig({
 	},
 	plugins: [
 		mdx({
-		  remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+			remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
 		}),
 		envOnlyMacros(),
 		// it would be really nice to have this enabled in tests, but we'll have to

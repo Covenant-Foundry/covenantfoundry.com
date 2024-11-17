@@ -156,11 +156,6 @@ export default function EditUserProfile() {
 					</Link>
 				</div>
 				<div>
-					<Link to="connections">
-						<Icon name="link-2">Manage connections</Icon>
-					</Link>
-				</div>
-				<div>
 					<Link
 						reloadDocument
 						download="my-epic-notes-data.json"

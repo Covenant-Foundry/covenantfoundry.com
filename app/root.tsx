@@ -21,6 +21,7 @@ import { CTAButton } from './components/cta-button.tsx'
 import { DiscordLink } from './components/discord-link.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { EpicProgress } from './components/progress-bar.tsx'
+import { useToast } from './components/toaster.tsx'
 import { Icon, href as iconsHref } from './components/ui/icon.tsx'
 import { EpicToaster } from './components/ui/sonner.tsx'
 import backgroundStyleSheetUrl from './styles/background.css?url'
@@ -187,6 +188,7 @@ function Document({
 function App() {
 	const data = useLoaderData<typeof loader>()
 	const nonce = useNonce()
+	useToast(data.toast)
 
 	return (
 		<Document nonce={nonce} env={data.ENV} ogUrl={data.ogUrl}>
@@ -207,7 +209,7 @@ function App() {
 					<Outlet />
 				</div>
 			</div>
-			<EpicToaster closeButton position="top-center" />
+			<EpicToaster closeButton position="top-center" theme="dark" />
 			<EpicProgress />
 		</Document>
 	)
