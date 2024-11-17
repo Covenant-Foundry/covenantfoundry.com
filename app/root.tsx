@@ -80,6 +80,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   const headers = {
     "Server-Timing": loaderHeaders.get("Server-Timing") ?? "",
+    "Content-Security-Policy": [
+      "img-src 'self' data: blob: https:",
+    ].join("; "),
   };
   return headers;
 };
