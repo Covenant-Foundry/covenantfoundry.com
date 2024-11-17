@@ -33,8 +33,8 @@ ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
 # Use the following environment variables to configure Sentry
-# ENV SENTRY_ORG=
-# ENV SENTRY_PROJECT=
+ENV SENTRY_ORG=jon-winsley
+ENV SENTRY_PROJECT=covenant-foundry
 
 
 WORKDIR /myapp
