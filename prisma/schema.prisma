@@ -21,45 +21,34 @@ model User {
 
   image       UserImage?
   password    Password?
-  notes       Note[]
   roles       Role[]
   sessions    Session[]
-  connections Connection[]
 }
 
-model Note {
-  id      String @id @default(cuid())
-  title   String
-  content String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownerId String
-
-  images NoteImage[]
-
-  // non-unique foreign key
-  @@index([ownerId])
-  // This helps our order by in the user search a LOT
-  @@index([ownerId, updatedAt])
+model Book {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  description     String
+  longDescription String?
+  category        String
+  tags            String
+  link            String
+  imageUrl        String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
-model NoteImage {
-  id          String  @id @default(cuid())
-  altText     String?
-  contentType String
-  blob        Bytes
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  noteId String
-
-  // non-unique foreign key
-  @@index([noteId])
+model Community {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String
+  tags        String
+  link        String
+  imageUrl    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model UserImage {
@@ -152,18 +141,4 @@ model Verification {
   expiresAt DateTime?
 
   @@unique([target, type])
-}
-
-model Connection {
-  id           String @id @default(cuid())
-  providerName String
-  providerId   String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
-
-  @@unique([providerName, providerId])
 }

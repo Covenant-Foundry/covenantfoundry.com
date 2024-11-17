@@ -9,26 +9,31 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Note" (
+CREATE TABLE "Book" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "title" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "longDescription" TEXT,
+    "category" TEXT NOT NULL,
+    "tags" TEXT NOT NULL,
+    "link" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "ownerId" TEXT NOT NULL,
-    CONSTRAINT "Note_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
-CREATE TABLE "NoteImage" (
+CREATE TABLE "Community" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "altText" TEXT,
-    "contentType" TEXT NOT NULL,
-    "blob" BLOB NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "tags" TEXT NOT NULL,
+    "link" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "noteId" TEXT NOT NULL,
-    CONSTRAINT "NoteImage_noteId_fkey" FOREIGN KEY ("noteId") REFERENCES "Note" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
@@ -95,17 +100,6 @@ CREATE TABLE "Verification" (
 );
 
 -- CreateTable
-CREATE TABLE "Connection" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "providerName" TEXT NOT NULL,
-    "providerId" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "userId" TEXT NOT NULL,
-    CONSTRAINT "Connection_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- CreateTable
 CREATE TABLE "_PermissionToRole" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL,
@@ -128,13 +122,7 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
-CREATE INDEX "Note_ownerId_idx" ON "Note"("ownerId");
-
--- CreateIndex
-CREATE INDEX "Note_ownerId_updatedAt_idx" ON "Note"("ownerId", "updatedAt");
-
--- CreateIndex
-CREATE INDEX "NoteImage_noteId_idx" ON "NoteImage"("noteId");
+CREATE UNIQUE INDEX "Book_slug_key" ON "Book"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserImage_userId_key" ON "UserImage"("userId");
@@ -155,9 +143,6 @@ CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 CREATE UNIQUE INDEX "Verification_target_type_key" ON "Verification"("target", "type");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Connection_providerName_providerId_key" ON "Connection"("providerName", "providerId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "_PermissionToRole_AB_unique" ON "_PermissionToRole"("A", "B");
 
 -- CreateIndex
@@ -168,57 +153,6 @@ CREATE UNIQUE INDEX "_RoleToUser_AB_unique" ON "_RoleToUser"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_RoleToUser_B_index" ON "_RoleToUser"("B");
-
---------------------------------- Manual Seeding --------------------------
--- Hey there, Kent here! This is how you can reliably seed your database with
--- some data. You edit the migration.sql file and that will handle it for you.
-
--- The user Roles and Permissions are seeded here.
--- If you'd like to customise roles and permissions, you can edit and add the code below to your `prisma/seed.ts` file.
--- Seed your development database with `npx prisma db seed`
--- Create a sql dump of your database with `sqlite3 prisma/data.db .dump > seed.sql`
--- Replace the SQL below with your new Roles & Permissions related SQL from `seed.sql`
-
--- console.time('🔑 Created permissions...')
--- const entities = ['user', 'note']
--- const actions = ['create', 'read', 'update', 'delete']
--- const accesses = ['own', 'any'] as const
-
--- let permissionsToCreate = []
--- for (const entity of entities) {
--- 	for (const action of actions) {
--- 		for (const access of accesses) {
--- 			permissionsToCreate.push({ entity, action, access })
--- 		}
--- 	}
--- }
--- await prisma.permission.createMany({ data: permissionsToCreate })
--- console.timeEnd('🔑 Created permissions...')
-
--- console.time('👑 Created roles...')
--- await prisma.role.create({
--- 	data: {
--- 		name: 'admin',
--- 		permissions: {
--- 			connect: await prisma.permission.findMany({
--- 				select: { id: true },
--- 				where: { access: 'any' },
--- 			}),
--- 		},
--- 	},
--- })
--- await prisma.role.create({
--- 	data: {
--- 		name: 'user',
--- 		permissions: {
--- 			connect: await prisma.permission.findMany({
--- 				select: { id: true },
--- 				where: { access: 'own' },
--- 			}),
--- 		},
--- 	},
--- })
--- console.timeEnd('👑 Created roles...')
 
 INSERT INTO Permission VALUES('clnf2zvli0000pcou3zzzzome','create','user','own','',1696625465526,1696625465526);
 INSERT INTO Permission VALUES('clnf2zvll0001pcouly1310ku','create','user','any','',1696625465529,1696625465529);
