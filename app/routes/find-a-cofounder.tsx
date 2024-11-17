@@ -1,6 +1,6 @@
 import { Link, MetaFunction } from "@remix-run/react";
-import { DiscordLink } from "~/components/discord-link";
-import { Prose } from "~/components/prose";
+import { DiscordLink } from "#app/components/discord-link";
+import { Prose } from "#app/components/prose";
 
 export const meta: MetaFunction = () => {
   return [

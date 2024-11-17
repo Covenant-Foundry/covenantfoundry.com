@@ -7,10 +7,10 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
-import { Prose } from "~/components/prose";
-import { Tags } from "~/components/ui/tags";
-import { books } from "~/data/books";
-import { notFound } from "~/utils/notfound";
+import { Prose } from "#app/components/prose";
+import { Tags } from "#app/components/ui/tags";
+import { books } from "#app/data/books";
+import { notFound } from "#app/utils/notfound";
 
 export const meta: MetaFunction = () => {
   return [

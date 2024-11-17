@@ -1,6 +1,7 @@
 {
-	"name": "",
-	"short_name": "",
+	"name": "Covenant Foundry",
+	"short_name": "Covenant Foundry",
+	"start_url": "/",
 	"icons": [
 		{
 			"src": "/favicons/android-chrome-192x192.png",
@@ -13,8 +14,8 @@
 			"type": "image/png"
 		}
 	],
-	"theme_color": "#ffffff",
-	"background_color": "#ffffff",
+	"theme_color": "#fc861d",
+	"background_color": "#121212",
 	"display": "standalone"
 }
 

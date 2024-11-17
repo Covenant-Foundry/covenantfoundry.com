@@ -1,8 +1,8 @@
-import christiansInTech from "~/assets/images/christians-in-tech.jpg";
-import faithDrivenEntrepreneur from "~/assets/images/faith-driven-entrepreneur.webp";
-import faithTech from "~/assets/images/faithtech.png";
-import reformedDevs from "~/assets/images/reformed-devs.png";
-import { type Resource } from "~/components/resources/resource-card";
+import christiansInTech from "#app/assets/images/christians-in-tech.jpg";
+import faithDrivenEntrepreneur from "#app/assets/images/faith-driven-entrepreneur.webp";
+import faithTech from "#app/assets/images/faithtech.png";
+import reformedDevs from "#app/assets/images/reformed-devs.png";
+import { type Resource } from "#app/components/resources/resource-card";
 
 export const communities: Resource[] = [
   {

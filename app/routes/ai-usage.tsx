@@ -1,6 +1,6 @@
 import { MetaFunction } from "@remix-run/node";
-import { AILevel } from "~/components/ai-level";
-import { Prose } from "~/components/prose";
+import { AILevel } from "#app/components/ai-level";
+import { Prose } from "#app/components/prose";
 
 export const meta: MetaFunction = () => {
   return [

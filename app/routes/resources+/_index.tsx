@@ -1,6 +1,6 @@
 import { type MetaFunction } from "@remix-run/node";
 import { Resources } from "../../components/resources";
-import { Prose } from "~/components/prose";
+import { Prose } from "#app/components/prose";
 
 export const meta: MetaFunction = () => {
   return [

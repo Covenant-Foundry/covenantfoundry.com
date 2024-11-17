@@ -1,11 +1,11 @@
-import ventureDeals from "~/assets/images/venture-deals.jpg";
-import zeroToOne from "~/assets/images/zero-to-one.jpg";
-import millionDollarWeekend from "~/assets/images/million-dollar-weekend.jpg";
-import neverEatAlone from "~/assets/images/never-eat-alone.jpg";
-import partnershipCharter from "~/assets/images/partnership-charter.jpg";
-import faithDrivenEntrepreneur from "~/assets/images/faith-driven-entrepreneur.jpg";
-import entrepreneursGuideToLawAndStrategy from "~/assets/images/entrepreneurs-guide-law-strategy.jpg";
-import doMoreFaster from "~/assets/images/do-more-faster.jpg";
+import ventureDeals from "#app/assets/images/venture-deals.jpg";
+import zeroToOne from "#app/assets/images/zero-to-one.jpg";
+import millionDollarWeekend from "#app/assets/images/million-dollar-weekend.jpg";
+import neverEatAlone from "#app/assets/images/never-eat-alone.jpg";
+import partnershipCharter from "#app/assets/images/partnership-charter.jpg";
+import faithDrivenEntrepreneur from "#app/assets/images/faith-driven-entrepreneur.jpg";
+import entrepreneursGuideToLawAndStrategy from "#app/assets/images/entrepreneurs-guide-law-strategy.jpg";
+import doMoreFaster from "#app/assets/images/do-more-faster.jpg";
 
 export const books = [
   {

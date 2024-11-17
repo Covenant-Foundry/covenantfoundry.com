@@ -1,4 +1,4 @@
-import { cn } from "~/utils/misc";
+import { cn } from "#app/utils/misc";
 
 export function DiscordLink({ className }: { className?: string }) {
   return (
