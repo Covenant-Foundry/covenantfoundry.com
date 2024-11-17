@@ -34,4 +34,11 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    headers: {
+      "Content-Security-Policy": [
+        "img-src 'self' data: blob: https:",
+      ].join("; "),
+    },
+  },
 });
