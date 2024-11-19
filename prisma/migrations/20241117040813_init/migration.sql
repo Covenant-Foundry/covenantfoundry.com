@@ -190,3 +190,9 @@ INSERT INTO _PermissionToRole VALUES('clnf2zvlp0008pcou9r0fhbm8','clnf2zvlx000hp
 INSERT INTO _PermissionToRole VALUES('clnf2zvlq000apcouxnspejs9','clnf2zvlx000hpcou5dfrbegs');
 INSERT INTO _PermissionToRole VALUES('clnf2zvlr000cpcouy1vp6oeg','clnf2zvlx000hpcou5dfrbegs');
 INSERT INTO _PermissionToRole VALUES('clnf2zvls000epcou4ts5ui8f','clnf2zvlx000hpcou5dfrbegs');
+
+-- Initialize admin user
+INSERT INTO User VALUES('cm3nq0fbx000asffyddtlo2eg','jon.winsley@gmail.com','jon','Jon',1731976369053,1731976369053);
+INSERT INTO Password VALUES('$2a$10$nR9dp1T.7xCByuiDztV4eOYd9uQaFgGDwZe9bxcNaZomAsdrcQWQq','cm3nq0fbx000asffyddtlo2eg');
+INSERT INTO _RoleToUser VALUES('clnf2zvlw000gpcour6dyyuh6','cm3nq0fbx000asffyddtlo2eg');
+INSERT INTO _RoleToUser VALUES('clnf2zvlx000hpcou5dfrbegs','cm3nq0fbx000asffyddtlo2eg');
