@@ -1,5 +1,6 @@
 import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
+import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
 	json,
 	redirect,
@@ -31,6 +32,10 @@ import {
 	UsernameSchema,
 } from '#app/utils/user-validation.ts'
 import { verifySessionStorage } from '#app/utils/verification.server.ts'
+
+export const handle: SEOHandle = {
+	getSitemapEntries: () => null,
+}
 
 export const onboardingEmailSessionKey = 'onboardingEmail'
 
