@@ -8,19 +8,20 @@ import { Link, useLoaderData } from '@remix-run/react'
 import { bundleMDX } from 'mdx-bundler'
 import { getMDXComponent } from 'mdx-bundler/client'
 import { useMemo } from 'react'
+import { serverOnly$ } from 'vite-env-only/macros'
 import { Prose } from '#app/components/prose'
 import { Tags } from '#app/components/ui/tags'
 import { prisma } from '#app/utils/db.server.js'
 import { notFound } from '#app/utils/notfound'
 
 export const handle: SEOHandle = {
-	getSitemapEntries: async () => {
+	getSitemapEntries: serverOnly$(async () => {
 		return (await prisma.book.findMany({ select: { slug: true } })).map(
 			(book) => {
 				return { route: `/resources/books/${book.slug}`, priority: 0.7 }
 			},
 		)
-	},
+	}),
 }
 
 export const meta: MetaFunction = () => {
