@@ -10,14 +10,16 @@ import { getMDXComponent } from 'mdx-bundler/client'
 import { useMemo } from 'react'
 import { Prose } from '#app/components/prose'
 import { Tags } from '#app/components/ui/tags'
-import { books } from '#app/data/books'
+import { prisma } from '#app/utils/db.server.js'
 import { notFound } from '#app/utils/notfound'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: async () => {
-		return books.map((book) => {
-			return { route: `/resources/books/${book.slug}`, priority: 0.7 }
-		})
+		return (await prisma.book.findMany({ select: { slug: true } })).map(
+			(book) => {
+				return { route: `/resources/books/${book.slug}`, priority: 0.7 }
+			},
+		)
 	},
 }
 
@@ -29,12 +31,12 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-	const book = books.find((book) => book.slug === params.book)
+	const book = await prisma.book.findUnique({ where: { slug: params.book } })
 	if (!book) {
 		throw notFound()
 	}
 	const content = await bundleMDX({
-		source: book.longDescription,
+		source: book.longDescription ?? '',
 	})
 	return json({ book, content })
 }
@@ -42,11 +44,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function Book() {
 	const { book, content } = useLoaderData<typeof loader>()
 	const Content = useMemo(() => getMDXComponent(content.code), [content.code])
+	const tags = book.tags ? book.tags.split(',') : []
 	return (
 		<Prose className="mx-auto max-w-4xl py-10">
 			<div className="flex flex-row gap-10">
 				<img
-					src={book.imageUrl}
+					src={`/images/${book.imageId}`}
 					alt={book.title}
 					className="max-h-sm m-0 max-w-sm object-cover"
 				/>
@@ -65,7 +68,7 @@ export default function Book() {
 						<Link to={book.link} className="text-body-xs">
 							Buy on Amazon
 						</Link>
-						<Tags tags={book.tags} />
+						<Tags tags={tags} />
 					</div>
 					<div>
 						<Content />

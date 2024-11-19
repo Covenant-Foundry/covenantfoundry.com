@@ -10,7 +10,7 @@ export const prisma = remember('prisma', () => {
 	// the dev server to see your changes.
 
 	invariant(process.env.TURSO_DATABASE_URL, 'TURSO_DATABASE_URL not provided')
-	invariant(process.env.TURSO_AUTH_TOKEN, 'TURSO_AUTH_TOKEN not provided')
+
 	const libsql = createClient({
 		url: process.env.TURSO_DATABASE_URL,
 		authToken: process.env.TURSO_AUTH_TOKEN,

@@ -1,9 +1,10 @@
+import { type Community } from '@prisma/client'
 import { json, type MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { Prose } from '#app/components/prose'
+import { prisma } from '#app/utils/db.server.js'
 import { ResourceCard } from '../../components/resources/resource-card'
 import { ResourceGrid } from '../../components/resources/resource-grid'
-import { communities } from '../../data/communities'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -13,12 +14,12 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async () => {
-	const communitiesByCategory = communities.reduce(
+	const communitiesByCategory = (await prisma.community.findMany()).reduce(
 		(acc, community) => {
 			acc[community.category] = [...(acc[community.category] || []), community]
 			return acc
 		},
-		{} as Record<string, typeof communities>,
+		{} as Record<string, Community[]>,
 	)
 	return json({
 		communitiesByCategory,

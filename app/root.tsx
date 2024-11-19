@@ -86,7 +86,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 							id: true,
 							name: true,
 							username: true,
-							image: { select: { id: true } },
 							roles: {
 								select: {
 									name: true,

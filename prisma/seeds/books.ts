@@ -1,11 +1,10 @@
-import doMoreFaster from '#app/assets/images/do-more-faster.jpg'
-import entrepreneursGuideToLawAndStrategy from '#app/assets/images/entrepreneurs-guide-law-strategy.jpg'
-import faithDrivenEntrepreneur from '#app/assets/images/faith-driven-entrepreneur.jpg'
-import millionDollarWeekend from '#app/assets/images/million-dollar-weekend.jpg'
-import neverEatAlone from '#app/assets/images/never-eat-alone.jpg'
-import partnershipCharter from '#app/assets/images/partnership-charter.jpg'
-import ventureDeals from '#app/assets/images/venture-deals.jpg'
-import zeroToOne from '#app/assets/images/zero-to-one.jpg'
+import fs from 'fs/promises'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { prisma } from '#app/utils/db.server.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export const books = [
 	{
@@ -16,7 +15,7 @@ export const books = [
 		category: 'Inspiration',
 		tags: ['Peter Thiel'],
 		link: 'https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/',
-		imageUrl: zeroToOne,
+		imageUrl: 'zero-to-one.jpg',
 	},
 	{
 		title: 'Venture Deals',
@@ -26,7 +25,7 @@ export const books = [
 		category: 'Business',
 		tags: ['Brad Feld', 'Jason Mendelson'],
 		link: 'https://www.amazon.com/Venture-Deals-4th-Edition-audiobook/dp/B07YL8NHLH',
-		imageUrl: ventureDeals,
+		imageUrl: 'venture-deals.jpg',
 	},
 	{
 		title: 'Million Dollar Weekend',
@@ -36,7 +35,7 @@ export const books = [
 		category: 'Inspiration',
 		tags: ['Noah Kagan'],
 		link: 'https://appsumo.com/products/million-dollar-weekend-ga/',
-		imageUrl: millionDollarWeekend,
+		imageUrl: 'million-dollar-weekend.jpg',
 	},
 	{
 		title: 'Never Eat Alone',
@@ -46,7 +45,7 @@ export const books = [
 		category: 'Networking',
 		tags: ['Keith Ferrazzi'],
 		link: 'https://www.amazon.com/gp/aw/d/0385346654/',
-		imageUrl: neverEatAlone,
+		imageUrl: 'never-eat-alone.jpg',
 	},
 	{
 		title: 'The Partnership Charter',
@@ -56,7 +55,7 @@ export const books = [
 		category: 'Business',
 		tags: ['David Gage'],
 		link: 'https://www.amazon.com/Partnership-Charter-Start-Right-Business/dp/0738208981/',
-		imageUrl: partnershipCharter,
+		imageUrl: 'partnership-charter.jpg',
 	},
 	{
 		title: 'Faith Driven Entrepreneur',
@@ -67,7 +66,7 @@ export const books = [
 		category: 'Inspiration',
 		tags: ['Henry Kaestner', 'J.D. Greear', 'Chip Ingram'],
 		link: 'https://www.amazon.com/Faith-Driven-Entrepreneur-Purpose-God-Given/dp/1496457234/',
-		imageUrl: faithDrivenEntrepreneur,
+		imageUrl: 'faith-driven-entrepreneur.jpg',
 	},
 	{
 		title: "The Entrepreneur's Guide to Law and Strategy",
@@ -77,7 +76,7 @@ export const books = [
 		category: 'Law',
 		tags: ['Constance Bagley', 'Craig Dauchy'],
 		link: 'https://www.amazon.com/Entrepreneurs-Guide-Law-Strategy-ebook/dp/B06X9DRMB5/',
-		imageUrl: entrepreneursGuideToLawAndStrategy,
+		imageUrl: 'entrepreneurs-guide-law-strategy.jpg',
 	},
 	{
 		title: 'Do More Faster',
@@ -87,8 +86,57 @@ export const books = [
 		category: 'Inspiration',
 		tags: ['David Cohen', 'Brad Feld'],
 		link: 'https://www.amazon.com/Do-More-Faster-TechStars-Accelerate/dp/1119583284/',
-		imageUrl: doMoreFaster,
+		imageUrl: 'do-more-faster.jpg',
 	},
 ]
 
-books.sort((a, b) => a.title.localeCompare(b.title))
+async function seed() {
+	console.log('🌱 Seeding...')
+
+	// Clear existing data
+	await prisma.book.deleteMany()
+	await prisma.image.deleteMany()
+
+	// Process each book
+	for (const book of books) {
+		// Read the image file
+		const imagePath = path.resolve(
+			__dirname,
+			'../../app/assets/images/',
+			book.imageUrl,
+		)
+		const imageBuffer = await fs.readFile(imagePath)
+
+		// Create the book entry
+		await prisma.book.create({
+			data: {
+				title: book.title,
+				slug: book.slug,
+				description: book.description,
+				longDescription: book.longDescription || '',
+				category: book.category,
+				tags: book.tags.join(','), // Convert array to comma-separated string
+				link: book.link,
+				image: {
+					create: {
+						contentType: 'image/jpeg',
+						blob: imageBuffer,
+						altText: `Cover of ${book.title}`,
+					},
+				},
+			},
+		})
+	}
+
+	console.log('✅ Seeding complete')
+}
+
+seed()
+	.catch((e) => {
+		console.error('❌ Seeding failed')
+		console.error(e)
+		process.exit(1)
+	})
+	.finally(async () => {
+		await prisma.$disconnect()
+	})
