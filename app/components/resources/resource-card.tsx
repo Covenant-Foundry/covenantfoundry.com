@@ -1,50 +1,40 @@
-import { Link } from "@remix-run/react";
-import { Tags } from "../ui/tags";
-
-export type Resource = {
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
-  imageUrl?: string;
-} & (
-  | {
-      link: string;
-    }
-  | {
-      slug: string;
-    }
-);
+import { type Book, type Community } from '@prisma/client'
+import { type SerializeFrom } from '@remix-run/node'
+import { Link } from '@remix-run/react'
+import { Tags } from '../ui/tags'
 
 export function ResourceCard({
-  resource,
-  root,
-  showCategory = false,
+	resource,
+	root,
+	showCategory = false,
 }: {
-  resource: Resource;
-  root: string;
-  showCategory?: boolean;
+	resource: SerializeFrom<Book | Community>
+	root: string
+	showCategory?: boolean
 }) {
-  const link = "slug" in resource ? `${root}/${resource.slug}` : resource.link;
-  return (
-    <div className="flex flex-row gap-2 w-md bg-white/10">
-      <div className="flex-1 flex flex-col justify-center items-center">
-        <Link to={link} className="h-full">
-          <img
-            src={resource.imageUrl}
-            alt={resource.title}
-            className="m-0 h-full object-cover"
-          />
-        </Link>
-      </div>
-      <div className="flex-1 flex flex-col gap-2 justify-between p-2">
-        <Link to={link} className="no-underline hover:underline">
-          <div className="text-2xl font-bold">{resource.title}</div>
-        </Link>
-        {showCategory && <div className="text-sm">{resource.category}</div>}
-        <Tags tags={resource.tags} />
-        <div className="text-sm flex-grow">{resource.description}</div>
-      </div>
-    </div>
-  );
+	const link = 'slug' in resource ? `${root}/${resource.slug}` : resource.link
+	const tags = resource.tags ? resource.tags.split(',') : []
+	return (
+		<div className="w-md flex flex-row gap-2 bg-white/10">
+			{'imageId' in resource && (
+				<div className="flex flex-1 flex-col items-center justify-center">
+					<Link to={link} className="h-full">
+						<img
+							src={`/images/${resource.imageId}`}
+							alt={resource.title}
+							className="m-0 h-full object-cover"
+						/>
+					</Link>
+				</div>
+			)}
+			<div className="flex flex-1 flex-col justify-between gap-2 p-2">
+				<Link to={link} className="no-underline hover:underline">
+					<div className="text-2xl font-bold">{resource.title}</div>
+				</Link>
+				{showCategory && <div className="text-sm">{resource.category}</div>}
+				<Tags tags={tags} />
+				<div className="flex-grow text-sm">{resource.description}</div>
+			</div>
+		</div>
+	)
 }

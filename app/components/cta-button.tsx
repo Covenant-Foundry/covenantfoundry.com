@@ -1,6 +1,6 @@
 import { Link, type LinkProps } from "@remix-run/react";
 
-import { cn } from "~/utils/misc";
+import { cn } from "#app/utils/misc";
 
 export function CTAButton({ className, ...props }: LinkProps) {
   return (
