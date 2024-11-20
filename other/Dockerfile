@@ -55,7 +55,7 @@ RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
 FROM base
 
 ENV FLY="true"
-ENV DATABASE_FILENAME="sqlite.db"
+ENV DATABASE_FILENAME="./data.db"
 ENV DATABASE_URL="file:$DATABASE_PATH"
 ENV INTERNAL_PORT="8080"
 ENV PORT="8081"
@@ -83,3 +83,5 @@ COPY --from=build /myapp/app/components/ui/icons /myapp/app/components/ui/icons
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 ADD . .
+
+CMD ["npm", "start"]
