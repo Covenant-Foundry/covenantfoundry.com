@@ -8,12 +8,14 @@ export const prisma = remember('prisma', () => {
 	// NOTE: if you change anything in this function you'll need to restart
 	// the dev server to see your changes.
 
-	const adapter = new PrismaLibSQL(
-		createClient({
-			url: process.env.TURSO_DATABASE_URL,
-			authToken: process.env.TURSO_AUTH_TOKEN,
-		}),
-	)
+	const libsql = createClient({
+		url: 'file:./prisma/data.db',
+		syncUrl: process.env.TURSO_DATABASE_URL,
+		authToken: process.env.TURSO_AUTH_TOKEN,
+		syncInterval: 60000,
+	})
+
+	const adapter = new PrismaLibSQL(libsql)
 
 	// Feel free to change this log threshold to something that makes sense for you
 	const logThreshold = 20
@@ -25,6 +27,22 @@ export const prisma = remember('prisma', () => {
 			{ level: 'warn', emit: 'stdout' },
 		],
 		adapter,
+	})
+	client.$extends({
+		query: {
+			$allModels: {
+				async $allOperations({ operation, args, query }) {
+					const result = await query(args)
+
+					// Synchronize the embedded replica after any write operation
+					if (['create', 'update', 'delete'].includes(operation)) {
+						await libsql.sync()
+					}
+
+					return result
+				},
+			},
+		},
 	})
 	client.$on('query', async (e) => {
 		if (e.duration < logThreshold) return

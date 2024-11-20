@@ -18,9 +18,10 @@ CREATE TABLE "Book" (
     "category" TEXT NOT NULL,
     "tags" TEXT NOT NULL,
     "link" TEXT NOT NULL,
-    "imageUrl" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "updatedAt" DATETIME NOT NULL,
+    "imageId" TEXT NOT NULL,
+    CONSTRAINT "Book_imageId_fkey" FOREIGN KEY ("imageId") REFERENCES "Image" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -31,21 +32,20 @@ CREATE TABLE "Community" (
     "category" TEXT NOT NULL,
     "tags" TEXT NOT NULL,
     "link" TEXT NOT NULL,
-    "imageUrl" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "updatedAt" DATETIME NOT NULL,
+    "imageId" TEXT NOT NULL,
+    CONSTRAINT "Community_imageId_fkey" FOREIGN KEY ("imageId") REFERENCES "Image" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
-CREATE TABLE "UserImage" (
+CREATE TABLE "Image" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "altText" TEXT,
     "contentType" TEXT NOT NULL,
     "blob" BLOB NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "userId" TEXT NOT NULL,
-    CONSTRAINT "UserImage_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
@@ -123,9 +123,6 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Book_slug_key" ON "Book"("slug");
-
--- CreateIndex
-CREATE UNIQUE INDEX "UserImage_userId_key" ON "UserImage"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Password_userId_key" ON "Password"("userId");
