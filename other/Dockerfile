@@ -57,8 +57,7 @@ FROM base
 ENV FLY="true"
 ENV DATABASE_FILENAME="./data.db"
 ENV DATABASE_URL="file:$DATABASE_PATH"
-ENV INTERNAL_PORT="8080"
-ENV PORT="3000"
+ENV PORT="8080"
 ENV NODE_ENV="production"
 # For WAL support: https://github.com/prisma/prisma-engines/issues/4675#issuecomment-1914383246
 ENV PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK = "1"
