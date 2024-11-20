@@ -12,7 +12,8 @@ server.listen({
 		//       like requested at https://github.com/mswjs/msw/issues/1804
 		if (
 			request.url.includes('.sentry.io') ||
-			request.url.includes(process.env.TURSO_DATABASE_URL)
+			(process.env.TURSO_DATABASE_URL &&
+				request.url.includes(process.env.TURSO_DATABASE_URL))
 		) {
 			return
 		}
