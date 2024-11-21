@@ -17,15 +17,13 @@ export function ResourceCard({
 	return (
 		<div className="w-md flex flex-row gap-2 bg-white/10">
 			{'imageId' in resource && (
-				<div className="flex flex-1 flex-col items-center justify-center">
-					<Link to={link} className="h-full">
-						<img
-							src={`/images/${resource.imageId}`}
-							alt={resource.title}
-							className="m-0 h-full object-cover"
-						/>
-					</Link>
-				</div>
+				<Link to={link} className="flex flex-1 items-stretch justify-stretch">
+					<img
+						src={`/images/${resource.imageId}`}
+						alt={resource.title}
+						className="m-0 object-cover"
+					/>
+				</Link>
 			)}
 			<div className="flex flex-1 flex-col justify-between gap-2 p-2">
 				<Link to={link} className="no-underline hover:underline">
