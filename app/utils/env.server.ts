@@ -8,7 +8,7 @@ const schema = z.object({
 	SENTRY_DSN: z.string(),
 	RESEND_API_KEY: z.string(),
 	ALLOW_INDEXING: z.enum(['true', 'false']).optional(),
-	TURSO_DATABASE_URL: z.string().optional(),
+	TURSO_DATABASE_URL: z.string(),
 	TURSO_AUTH_TOKEN: z.string().optional(),
 })
 

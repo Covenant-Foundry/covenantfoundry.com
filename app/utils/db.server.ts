@@ -9,10 +9,8 @@ export const prisma = remember('prisma', () => {
 	// the dev server to see your changes.
 
 	const libsql = createClient({
-		url: 'file:./prisma/data.db',
-		syncUrl: process.env.TURSO_DATABASE_URL,
+		url: process.env.TURSO_DATABASE_URL,
 		authToken: process.env.TURSO_AUTH_TOKEN,
-		syncInterval: 60000,
 	})
 
 	const adapter = new PrismaLibSQL(libsql)

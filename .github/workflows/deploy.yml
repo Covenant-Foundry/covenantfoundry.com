@@ -118,7 +118,12 @@ jobs:
 
       - name: 🌱 Seed Database
         if: steps.db-cache.outputs.cache-hit != 'true'
+        env:
+          TURSO_DATABASE_URL: data:./prisma/data.db
         run: npx prisma migrate reset --force
+
+      - name: 🛠 Run Turso Database
+        run: $HOME/.turso/bin/turso dev --db-file=./prisma/data.db
 
       - name: 🏗 Build
         run: npm run build

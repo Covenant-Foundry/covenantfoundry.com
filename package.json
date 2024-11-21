@@ -29,7 +29,9 @@
     "test:e2e:install": "npx playwright install --with-deps chromium",
     "typecheck": "tsc",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run",
-    "db:makemigrations": "prisma migrate dev --create-only"
+    "db:makemigrations": "prisma migrate dev --create-only",
+    "db:dev": "turso dev --db-file=./prisma/data.db",
+    "db:reset": "prisma migrate reset --force"
   },
   "prettier": "@epic-web/config/prettier",
   "eslintIgnore": [
