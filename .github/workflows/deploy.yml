@@ -98,7 +98,9 @@ jobs:
           node-version: 20
 
       - name: 📥 Download Turso
-        run: curl -sSfL https://get.tur.so/install.sh | bash
+        run: |
+          curl -sSfL https://get.tur.so/install.sh | bash
+          echo "$HOME/.turso" >> $GITHUB_PATH
         env:
           TURSO_INSTALL_SKIP_SIGNUP: 1
 
@@ -129,7 +131,7 @@ jobs:
         run: npx prisma migrate reset --force
 
       - name: 🛠 Run Turso Database
-        run: $HOME/.turso/turso dev --db-file=./prisma/data.db
+        run: turso dev --db-file=./prisma/data.db
 
       - name: 🏗 Build
         run: npm run build
