@@ -2,6 +2,7 @@ import fs from 'fs/promises'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { invariant } from '@epic-web/invariant'
+import { inArray } from 'drizzle-orm'
 import { Book, Image } from '#app/db/schema.js'
 import { db } from '#app/utils/db.server.js'
 
@@ -96,8 +97,13 @@ async function seed() {
 	console.log('🌱 Seeding...')
 
 	// Clear existing data
-	await db.delete(Book)
-	await db.delete(Image)
+	const images = await db.delete(Book).returning({ id: Image.id })
+	await db.delete(Image).where(
+		inArray(
+			Image.id,
+			images.map((image) => image.id),
+		),
+	)
 
 	// Process each book
 	for (const book of books) {
@@ -131,7 +137,7 @@ async function seed() {
 		})
 	}
 
-	console.log('✅ Seeding complete')
+	console.log('✅ Books seeding complete')
 }
 
 seed()
