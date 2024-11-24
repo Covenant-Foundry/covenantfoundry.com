@@ -7,8 +7,7 @@ node_modules
 .env
 .cache
 
-/prisma/data.db*
-/tests/prisma
+/data.db*
 
 /test-results/
 /playwright-report/

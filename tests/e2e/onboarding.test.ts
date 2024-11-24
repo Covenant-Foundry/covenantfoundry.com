@@ -1,6 +1,8 @@
 import { invariant } from '@epic-web/invariant'
 import { faker } from '@faker-js/faker'
-import { prisma } from '#app/utils/db.server.ts'
+import { eq } from 'drizzle-orm'
+import { User } from '#app/db/schema.js'
+import { db } from '#app/utils/db.server.ts'
 import { readEmail } from '#tests/mocks/utils.ts'
 import { createUser, expect, test as base } from '#tests/playwright-utils.ts'
 
@@ -28,7 +30,7 @@ const test = base.extend<{
 			}
 			return onboardingData
 		})
-		await prisma.user.deleteMany({ where: { username: userData.username } })
+		await db.delete(User).where(eq(User.username, userData.username))
 	},
 })
 

@@ -1,7 +1,10 @@
 import fs from 'fs/promises'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { prisma } from '#app/utils/db.server.js'
+import { invariant } from '@epic-web/invariant'
+import { inArray } from 'drizzle-orm'
+import { Community, Image } from '#app/db/schema.js'
+import { db } from '#app/utils/db.server.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -50,14 +53,13 @@ async function seed() {
 	console.log('🌱 Seeding communities...')
 
 	// Clear existing data
-	await prisma.community.deleteMany()
-	await prisma.image.deleteMany({
-		where: {
-			communities: {
-				some: {},
-			},
-		},
-	})
+	const images = await db.delete(Community).returning({ id: Image.id })
+	await db.delete(Image).where(
+		inArray(
+			Image.id,
+			images.map((image) => image.id),
+		),
+	)
 
 	// Process each community
 	for (const community of communities) {
@@ -70,21 +72,22 @@ async function seed() {
 		const imageBuffer = await fs.readFile(imagePath)
 
 		// Create the community entry
-		await prisma.community.create({
-			data: {
-				title: community.title,
-				description: community.description,
-				category: community.category,
-				tags: community.tags.join(','),
-				link: community.link,
-				image: {
-					create: {
-						contentType: getContentType(community.imageUrl),
-						blob: imageBuffer,
-						altText: `Logo of ${community.title}`,
-					},
-				},
-			},
+		const [image] = await db
+			.insert(Image)
+			.values({
+				contentType: getContentType(community.imageUrl),
+				blob: imageBuffer,
+				altText: `Logo of ${community.title}`,
+			})
+			.returning({ id: Image.id })
+		invariant(image, 'Failed to create image')
+		await db.insert(Community).values({
+			title: community.title,
+			description: community.description,
+			category: community.category,
+			tags: community.tags.join(','),
+			link: community.link,
+			imageId: image.id,
 		})
 	}
 
@@ -112,6 +115,6 @@ seed()
 		console.error(e)
 		process.exit(1)
 	})
-	.finally(async () => {
-		await prisma.$disconnect()
+	.finally(() => {
+		db.$client.close()
 	})

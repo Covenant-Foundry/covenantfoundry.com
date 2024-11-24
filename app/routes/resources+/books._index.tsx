@@ -1,7 +1,7 @@
 import { json, type MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { Prose } from '#app/components/prose'
-import { prisma } from '#app/utils/db.server.js'
+import { db } from '#app/utils/db.server.js'
 import { ResourceCard } from '../../components/resources/resource-card'
 import { ResourceGrid } from '../../components/resources/resource-grid'
 
@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async () => {
-	const books = await prisma.book.findMany()
+	const books = await db.query.Book.findMany()
 	const booksByCategory = books.reduce(
 		(acc, book) => {
 			acc[book.category] = [...(acc[book.category] || []), book]

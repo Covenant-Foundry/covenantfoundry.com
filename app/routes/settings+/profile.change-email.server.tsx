@@ -1,11 +1,13 @@
 import { invariant } from '@epic-web/invariant'
 import * as E from '@react-email/components'
 import { json } from '@remix-run/node'
+import { eq } from 'drizzle-orm'
+import { User } from '#app/db/schema.js'
 import {
 	requireRecentVerification,
 	type VerifyFunctionArgs,
 } from '#app/routes/_auth+/verify.server.ts'
-import { prisma } from '#app/utils/db.server.ts'
+import { db } from '#app/utils/db.server.ts'
 import { sendEmail } from '#app/utils/email.server.ts'
 import { redirectWithToast } from '#app/utils/toast.server.ts'
 import { verifySessionStorage } from '#app/utils/verification.server.ts'
@@ -37,15 +39,17 @@ export async function handleVerification({
 			{ status: 400 },
 		)
 	}
-	const preUpdateUser = await prisma.user.findFirstOrThrow({
-		select: { email: true },
-		where: { id: submission.value.target },
+	const preUpdateUser = await db.query.User.findFirst({
+		columns: { email: true },
+		where: eq(User.id, submission.value.target),
 	})
-	const user = await prisma.user.update({
-		where: { id: submission.value.target },
-		select: { id: true, email: true, username: true },
-		data: { email: newEmail },
-	})
+	invariant(preUpdateUser, 'User not found')
+	const [user] = await db
+		.update(User)
+		.set({ email: newEmail })
+		.where(eq(User.id, submission.value.target))
+		.returning()
+	invariant(user, 'User not found')
 
 	void sendEmail({
 		to: preUpdateUser.email,
