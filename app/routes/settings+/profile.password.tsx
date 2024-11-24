@@ -8,17 +8,19 @@ import {
 	type ActionFunctionArgs,
 } from '@remix-run/node'
 import { Form, Link, useActionData } from '@remix-run/react'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { ErrorList, Field } from '#app/components/forms.tsx'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
 import { StatusButton } from '#app/components/ui/status-button.tsx'
+import { Password } from '#app/db/schema.js'
 import {
 	getPasswordHash,
 	requireUserId,
 	verifyUserPassword,
 } from '#app/utils/auth.server.ts'
-import { prisma } from '#app/utils/db.server.ts'
+import { db } from '#app/utils/db.server.ts'
 import { useIsPending } from '#app/utils/misc.tsx'
 import { redirectWithToast } from '#app/utils/toast.server.ts'
 import { PasswordSchema } from '#app/utils/user-validation.ts'
@@ -46,9 +48,9 @@ const ChangePasswordForm = z
 	})
 
 async function requirePassword(userId: string) {
-	const password = await prisma.password.findUnique({
-		select: { userId: true },
-		where: { userId },
+	const password = await db.query.Password.findFirst({
+		columns: { userId: true },
+		where: eq(Password.userId, userId),
 	})
 	if (!password) {
 		throw redirect('/settings/profile/password/create')
@@ -95,17 +97,12 @@ export async function action({ request }: ActionFunctionArgs) {
 
 	const { newPassword } = submission.value
 
-	await prisma.user.update({
-		select: { username: true },
-		where: { id: userId },
-		data: {
-			password: {
-				update: {
-					hash: await getPasswordHash(newPassword),
-				},
-			},
-		},
-	})
+	await db
+		.update(Password)
+		.set({
+			hash: await getPasswordHash(newPassword),
+		})
+		.where(eq(Password.userId, userId))
 
 	return redirectWithToast(
 		`/settings/profile`,

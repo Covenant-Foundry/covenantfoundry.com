@@ -1,7 +1,10 @@
+import { invariant } from '@epic-web/invariant'
+import { and, eq } from 'drizzle-orm'
 import * as setCookieParser from 'set-cookie-parser'
 import { expect } from 'vitest'
+import { Session } from '#app/db/schema.js'
 import { sessionKey } from '#app/utils/auth.server.ts'
-import { prisma } from '#app/utils/db.server.ts'
+import { db } from '#app/utils/db.server.ts'
 import { authSessionStorage } from '#app/utils/session.server.ts'
 import {
 	type ToastInput,
@@ -104,10 +107,11 @@ expect.extend({
 			}
 		}
 
-		const session = await prisma.session.findUnique({
-			select: { id: true },
-			where: { userId, id: sessionValue },
+		const session = await db.query.Session.findFirst({
+			where: and(eq(Session.userId, userId), eq(Session.id, sessionValue)),
+			columns: { id: true },
 		})
+		invariant(session, 'Session not found')
 
 		return {
 			pass: Boolean(session),

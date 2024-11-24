@@ -1,7 +1,10 @@
 import fs from 'fs/promises'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { prisma } from '#app/utils/db.server.js'
+import { invariant } from '@epic-web/invariant'
+import { inArray } from 'drizzle-orm'
+import { Book, Image } from '#app/db/schema.js'
+import { db } from '#app/utils/db.server.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -94,8 +97,13 @@ async function seed() {
 	console.log('🌱 Seeding...')
 
 	// Clear existing data
-	await prisma.book.deleteMany()
-	await prisma.image.deleteMany()
+	const images = await db.delete(Book).returning({ id: Image.id })
+	await db.delete(Image).where(
+		inArray(
+			Image.id,
+			images.map((image) => image.id),
+		),
+	)
 
 	// Process each book
 	for (const book of books) {
@@ -108,27 +116,28 @@ async function seed() {
 		const imageBuffer = await fs.readFile(imagePath)
 
 		// Create the book entry
-		await prisma.book.create({
-			data: {
-				title: book.title,
-				slug: book.slug,
-				description: book.description,
-				longDescription: book.longDescription || '',
-				category: book.category,
-				tags: book.tags.join(','), // Convert array to comma-separated string
-				link: book.link,
-				image: {
-					create: {
-						contentType: 'image/jpeg',
-						blob: imageBuffer,
-						altText: `Cover of ${book.title}`,
-					},
-				},
-			},
+		const [image] = await db
+			.insert(Image)
+			.values({
+				contentType: 'image/jpeg',
+				blob: imageBuffer,
+				altText: `Cover of ${book.title}`,
+			})
+			.returning({ id: Image.id })
+		invariant(image, 'Failed to create image')
+		await db.insert(Book).values({
+			title: book.title,
+			slug: book.slug,
+			description: book.description,
+			longDescription: book.longDescription || '',
+			category: book.category,
+			tags: book.tags.join(','), // Convert array to comma-separated string
+			link: book.link,
+			imageId: image.id,
 		})
 	}
 
-	console.log('✅ Seeding complete')
+	console.log('✅ Books seeding complete')
 }
 
 seed()
@@ -137,6 +146,6 @@ seed()
 		console.error(e)
 		process.exit(1)
 	})
-	.finally(async () => {
-		await prisma.$disconnect()
+	.finally(() => {
+		db.$client.close()
 	})

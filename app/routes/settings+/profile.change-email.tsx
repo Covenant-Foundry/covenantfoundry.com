@@ -8,16 +8,18 @@ import {
 	type LoaderFunctionArgs,
 } from '@remix-run/node'
 import { Form, useActionData, useLoaderData } from '@remix-run/react'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { ErrorList, Field } from '#app/components/forms.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
 import { StatusButton } from '#app/components/ui/status-button.tsx'
+import { User } from '#app/db/schema.js'
 import {
 	prepareVerification,
 	requireRecentVerification,
 } from '#app/routes/_auth+/verify.server.ts'
 import { requireUserId } from '#app/utils/auth.server.ts'
-import { prisma } from '#app/utils/db.server.ts'
+import { db } from '#app/utils/db.server.ts'
 import { sendEmail } from '#app/utils/email.server.ts'
 import { useIsPending } from '#app/utils/misc.tsx'
 import { EmailSchema } from '#app/utils/user-validation.ts'
@@ -39,9 +41,9 @@ const ChangeEmailSchema = z.object({
 export async function loader({ request }: LoaderFunctionArgs) {
 	await requireRecentVerification(request)
 	const userId = await requireUserId(request)
-	const user = await prisma.user.findUnique({
-		where: { id: userId },
-		select: { email: true },
+	const user = await db.query.User.findFirst({
+		where: eq(User.id, userId),
+		columns: { email: true },
 	})
 	if (!user) {
 		const params = new URLSearchParams({ redirectTo: request.url })
@@ -55,8 +57,8 @@ export async function action({ request }: ActionFunctionArgs) {
 	const formData = await request.formData()
 	const submission = await parseWithZod(formData, {
 		schema: ChangeEmailSchema.superRefine(async (data, ctx) => {
-			const existingUser = await prisma.user.findUnique({
-				where: { email: data.email },
+			const existingUser = await db.query.User.findFirst({
+				where: eq(User.email, data.email),
 			})
 			if (existingUser) {
 				ctx.addIssue({

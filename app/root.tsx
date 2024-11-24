@@ -1,3 +1,4 @@
+import { invariant } from '@epic-web/invariant'
 import {
 	json,
 	type HeadersFunction,
@@ -15,6 +16,7 @@ import {
 	useLoaderData,
 } from '@remix-run/react'
 import { withSentry } from '@sentry/remix'
+import { eq } from 'drizzle-orm'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import appleTouchIconAssetUrl from './assets/favicons/apple-touch-icon.png'
 import { CTAButton } from './components/cta-button.tsx'
@@ -24,11 +26,12 @@ import { EpicProgress } from './components/progress-bar.tsx'
 import { useToast } from './components/toaster.tsx'
 import { Icon, href as iconsHref } from './components/ui/icon.tsx'
 import { EpicToaster } from './components/ui/sonner.tsx'
+import { User } from './db/schema.ts'
 import backgroundStyleSheetUrl from './styles/background.css?url'
 import tailwindStyleSheetUrl from './styles/tailwind.css?url'
 import { getUserId, logout } from './utils/auth.server.ts'
 import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
-import { prisma } from './utils/db.server.ts'
+import { db } from './utils/db.server.ts'
 import { getEnv } from './utils/env.server.ts'
 import { honeypot } from './utils/honeypot.server.ts'
 import { combineHeaders, getDomainUrl } from './utils/misc.tsx'
@@ -80,23 +83,33 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	const user = userId
 		? await time(
-				() =>
-					prisma.user.findUniqueOrThrow({
-						select: {
+				async () => {
+					const user = await db.query.User.findFirst({
+						columns: {
 							id: true,
 							name: true,
 							username: true,
+						},
+						where: eq(User.id, userId),
+						with: {
 							roles: {
-								select: {
-									name: true,
-									permissions: {
-										select: { entity: true, action: true, access: true },
+								with: {
+									role: {
+										with: {
+											permissions: {
+												with: {
+													permission: true,
+												},
+											},
+										},
 									},
 								},
 							},
 						},
-						where: { id: userId },
-					}),
+					})
+					invariant(user, 'user not found')
+					return user
+				},
 				{ timings, type: 'find user', desc: 'find user in root' },
 			)
 		: null

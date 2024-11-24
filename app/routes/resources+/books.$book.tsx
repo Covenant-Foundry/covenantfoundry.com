@@ -5,18 +5,20 @@ import {
 	type MetaFunction,
 } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
+import { eq } from 'drizzle-orm'
 import { bundleMDX } from 'mdx-bundler'
 import { getMDXComponent } from 'mdx-bundler/client'
 import { useMemo } from 'react'
 import { serverOnly$ } from 'vite-env-only/macros'
 import { Prose } from '#app/components/prose'
 import { Tags } from '#app/components/ui/tags'
-import { prisma } from '#app/utils/db.server.js'
+import { Book } from '#app/db/schema.js'
+import { db } from '#app/utils/db.server.js'
 import { notFound } from '#app/utils/notfound'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {
-		return (await prisma.book.findMany({ select: { slug: true } })).map(
+		return (await db.query.Book.findMany({ columns: { slug: true } })).map(
 			(book) => {
 				return { route: `/resources/books/${book.slug}`, priority: 0.7 }
 			},
@@ -32,7 +34,9 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-	const book = await prisma.book.findUnique({ where: { slug: params.book } })
+	const book = await db.query.Book.findFirst({
+		where: eq(Book.slug, params.book ?? ''),
+	})
 	if (!book) {
 		throw notFound()
 	}
@@ -42,7 +46,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	return json({ book, content })
 }
 
-export default function Book() {
+export default function BookPage() {
 	const { book, content } = useLoaderData<typeof loader>()
 	const Content = useMemo(() => getMDXComponent(content.code), [content.code])
 	const tags = book.tags ? book.tags.split(',') : []

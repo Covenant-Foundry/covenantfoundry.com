@@ -1,8 +1,8 @@
-import { type Community } from '@prisma/client'
 import { json, type MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { Prose } from '#app/components/prose'
-import { prisma } from '#app/utils/db.server.js'
+import { type Community } from '#app/db/schema.js'
+import { db } from '#app/utils/db.server.js'
 import { ResourceCard } from '../../components/resources/resource-card'
 import { ResourceGrid } from '../../components/resources/resource-grid'
 
@@ -14,12 +14,12 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async () => {
-	const communitiesByCategory = (await prisma.community.findMany()).reduce(
+	const communitiesByCategory = (await db.query.Community.findMany()).reduce(
 		(acc, community) => {
 			acc[community.category] = [...(acc[community.category] || []), community]
 			return acc
 		},
-		{} as Record<string, Community[]>,
+		{} as Record<string, (typeof Community.$inferSelect)[]>,
 	)
 	return json({
 		communitiesByCategory,

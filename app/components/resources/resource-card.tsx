@@ -1,6 +1,6 @@
-import { type Book, type Community } from '@prisma/client'
 import { type SerializeFrom } from '@remix-run/node'
 import { Link } from '@remix-run/react'
+import { type Book, type Community } from '#app/db/schema.js'
 import { Tags } from '../ui/tags'
 
 export function ResourceCard({
@@ -8,7 +8,9 @@ export function ResourceCard({
 	root,
 	showCategory = false,
 }: {
-	resource: SerializeFrom<Book | Community>
+	resource: SerializeFrom<
+		typeof Book.$inferSelect | typeof Community.$inferSelect
+	>
 	root: string
 	showCategory?: boolean
 }) {

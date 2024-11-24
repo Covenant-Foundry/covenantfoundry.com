@@ -1,6 +1,8 @@
 // learn more: https://fly.io/docs/reference/configuration/#services-http_checks
 import { type LoaderFunctionArgs } from '@remix-run/node'
-import { prisma } from '#app/utils/db.server.ts'
+import { count } from 'drizzle-orm'
+import { User } from '#app/db/schema.js'
+import { db } from '#app/utils/db.server.ts'
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const host =
@@ -10,7 +12,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		// if we can connect to the database and make a simple query
 		// and make a HEAD request to ourselves, then we're good.
 		await Promise.all([
-			prisma.user.count(),
+			db.select({ count: count() }).from(User),
 			fetch(`${new URL(request.url).protocol}${host}`, {
 				method: 'HEAD',
 				headers: { 'X-Healthcheck': 'true' },
