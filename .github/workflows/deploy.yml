@@ -78,6 +78,9 @@ jobs:
       - name: 🖼 Build icons
         run: npm run build:icons
 
+      - name: 🛠 Setup Database Directory
+        run: mkdir tests/drizzle
+
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
 
