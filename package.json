@@ -29,8 +29,10 @@
     "typecheck": "tsc",
     "validate": "run-p db:dev \"test -- --run\" lint typecheck test:e2e:run",
     "db:makemigrations": "drizzle-kit generate",
+    "db:reset": "rm ./data.db*",
     "db:dev": "turso dev --db-file=./data.db",
     "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx ./drizzle/seed.ts",
     "db:studio": "drizzle-kit studio"
   },
   "prettier": "@epic-web/config/prettier",

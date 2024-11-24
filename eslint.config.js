@@ -8,4 +8,10 @@ export default [
 		files: ['**/tests/**/*.ts'],
 		rules: { 'react-hooks/rules-of-hooks': 'off' },
 	},
+	{
+		files: ['drizzle/**/*.ts'],
+		rules: {
+			'no-restricted-imports': 'off',
+		},
+	},
 ]

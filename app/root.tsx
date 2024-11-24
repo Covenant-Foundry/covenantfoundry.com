@@ -94,7 +94,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 						with: {
 							roles: {
 								with: {
-									permissions: true,
+									role: {
+										with: {
+											permissions: {
+												with: {
+													permission: true,
+												},
+											},
+										},
+									},
 								},
 							},
 						},

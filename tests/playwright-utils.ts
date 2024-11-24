@@ -1,6 +1,6 @@
 import { invariant } from '@epic-web/invariant'
 import { test as base } from '@playwright/test'
-import { eq, sql } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import * as setCookieParser from 'set-cookie-parser'
 import {
 	Role,
@@ -67,16 +67,15 @@ async function getOrInsertUser({
 				name: User.name,
 			})
 		invariant(user, 'Failed to create user')
-		const withUserRoleId = db
-			.$with('user_role_id')
-			.as(db.select({ id: Role.id }).from(Role).where(eq(Role.name, 'user')))
-		await db
-			.with(withUserRoleId)
-			.insert(RoleToUser)
-			.values({
-				userId: user.id,
-				roleId: sql`${withUserRoleId}`,
-			})
+		const [userRole] = await db
+			.select({ id: Role.id })
+			.from(Role)
+			.where(eq(Role.name, 'user'))
+		invariant(userRole, 'User role not found')
+		await db.insert(RoleToUser).values({
+			userId: user.id,
+			roleId: userRole.id,
+		})
 		await db.insert(Password).values({
 			userId: user.id,
 			hash: await getPasswordHash(password),

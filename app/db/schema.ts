@@ -1,3 +1,4 @@
+import { createId } from '@paralleldrive/cuid2'
 import { relations, sql } from 'drizzle-orm'
 import {
 	sqliteTable,
@@ -10,7 +11,9 @@ import {
 } from 'drizzle-orm/sqlite-core'
 
 export const User = sqliteTable('User', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
+	id: text('id')
+		.primaryKey()
+		.$default(() => createId()),
 	email: text('email').unique().notNull(),
 	username: text('username').unique().notNull(),
 	name: text('name'),
@@ -33,7 +36,9 @@ export const usersRelations = relations(User, ({ one, many }) => ({
 export const Book = sqliteTable(
 	'Book',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
+		id: text('id')
+			.primaryKey()
+			.$default(() => createId()),
 		title: text('title').notNull(),
 		slug: text('slug').unique().notNull(),
 		description: text('description').notNull(),
@@ -47,9 +52,9 @@ export const Book = sqliteTable(
 		updatedAt: integer('updatedAt', { mode: 'timestamp' }).default(
 			sql`CURRENT_TIMESTAMP`,
 		),
-		imageId: integer('imageId')
+		imageId: text('imageId')
 			.notNull()
-			.references(() => Image.id),
+			.references(() => Image.id, { onDelete: 'set null' }),
 	},
 	(table) => ({
 		slugIndex: index('slugIndex').on(table.slug),
@@ -64,7 +69,9 @@ export const booksRelations = relations(Book, ({ one }) => ({
 }))
 
 export const Community = sqliteTable('Community', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
+	id: text('id')
+		.primaryKey()
+		.$default(() => createId()),
 	title: text('title').notNull(),
 	description: text('description').notNull(),
 	category: text('category').notNull(),
@@ -76,9 +83,9 @@ export const Community = sqliteTable('Community', {
 	updatedAt: integer('updatedAt', { mode: 'timestamp' }).default(
 		sql`CURRENT_TIMESTAMP`,
 	),
-	imageId: integer('imageId')
+	imageId: text('imageId')
 		.notNull()
-		.references(() => Image.id),
+		.references(() => Image.id, { onDelete: 'set null' }),
 })
 
 export const communitiesRelations = relations(Community, ({ one }) => ({
@@ -89,7 +96,9 @@ export const communitiesRelations = relations(Community, ({ one }) => ({
 }))
 
 export const Image = sqliteTable('Image', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
+	id: text('id')
+		.primaryKey()
+		.$default(() => createId()),
 	altText: text('altText'),
 	contentType: text('contentType').notNull(),
 	blob: blob('blob', { mode: 'buffer' }).notNull(),
@@ -103,10 +112,10 @@ export const Image = sqliteTable('Image', {
 
 export const Password = sqliteTable('Password', {
 	hash: text('hash').notNull(),
-	userId: integer('userId')
+	userId: text('userId')
 		.unique()
 		.notNull()
-		.references(() => User.id),
+		.references(() => User.id, { onDelete: 'cascade' }),
 })
 
 export const passwordsRelations = relations(Password, ({ one }) => ({
@@ -119,7 +128,9 @@ export const passwordsRelations = relations(Password, ({ one }) => ({
 export const Session = sqliteTable(
 	'Session',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
+		id: text('id')
+			.primaryKey()
+			.$default(() => createId()),
 		expirationDate: integer('expirationDate', { mode: 'timestamp' }).notNull(),
 		createdAt: integer('createdAt', { mode: 'timestamp' }).default(
 			sql`CURRENT_TIMESTAMP`,
@@ -127,9 +138,9 @@ export const Session = sqliteTable(
 		updatedAt: integer('updatedAt', { mode: 'timestamp' }).default(
 			sql`CURRENT_TIMESTAMP`,
 		),
-		userId: integer('userId')
+		userId: text('userId')
 			.notNull()
-			.references(() => User.id),
+			.references(() => User.id, { onDelete: 'cascade' }),
 	},
 	(table) => ({
 		userIdIndex: index('userIdIndex').on(table.userId),
@@ -146,7 +157,9 @@ export const sessionsRelations = relations(Session, ({ one }) => ({
 export const Permission = sqliteTable(
 	'Permission',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
+		id: text('id')
+			.primaryKey()
+			.$default(() => createId()),
 		action: text('action').notNull(),
 		entity: text('entity').notNull(),
 		access: text('access').notNull(),
@@ -172,7 +185,9 @@ export const permissionsRelations = relations(Permission, ({ many }) => ({
 }))
 
 export const Role = sqliteTable('Role', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
+	id: text('id')
+		.primaryKey()
+		.$default(() => createId()),
 	name: text('name').unique().notNull(),
 	description: text('description').default(''),
 	createdAt: integer('createdAt', { mode: 'timestamp' }).default(
@@ -191,12 +206,12 @@ export const rolesRelations = relations(Role, ({ many }) => ({
 export const RoleToPermission = sqliteTable(
 	'RoleToPermission',
 	{
-		roleId: integer('roleId')
+		roleId: text('roleId')
 			.notNull()
-			.references(() => Role.id),
-		permissionId: integer('permissionId')
+			.references(() => Role.id, { onDelete: 'cascade' }),
+		permissionId: text('permissionId')
 			.notNull()
-			.references(() => Permission.id),
+			.references(() => Permission.id, { onDelete: 'cascade' }),
 	},
 	(table) => ({
 		pk: primaryKey({ columns: [table.roleId, table.permissionId] }),
@@ -220,12 +235,12 @@ export const RoleToPermissionRelations = relations(
 export const RoleToUser = sqliteTable(
 	'RoleToUser',
 	{
-		roleId: integer('roleId')
+		roleId: text('roleId')
 			.notNull()
-			.references(() => Role.id),
-		userId: integer('userId')
+			.references(() => Role.id, { onDelete: 'cascade' }),
+		userId: text('userId')
 			.notNull()
-			.references(() => User.id),
+			.references(() => User.id, { onDelete: 'cascade' }),
 	},
 	(table) => ({
 		pk: primaryKey({ columns: [table.roleId, table.userId] }),
@@ -240,7 +255,9 @@ export const RoleToUserRelations = relations(RoleToUser, ({ one }) => ({
 export const Verification = sqliteTable(
 	'Verification',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
+		id: text('id')
+			.primaryKey()
+			.$default(() => createId()),
 		createdAt: integer('createdAt', { mode: 'timestamp' }).default(
 			sql`CURRENT_TIMESTAMP`,
 		),

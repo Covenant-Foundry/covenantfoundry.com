@@ -8,6 +8,7 @@ node_modules
 .cache
 
 /data.db*
+/tests/drizzle/
 
 /test-results/
 /playwright-report/

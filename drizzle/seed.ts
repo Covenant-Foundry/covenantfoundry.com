@@ -1,9 +1,25 @@
 import { invariant } from '@epic-web/invariant'
-import { Password, User } from '#app/db/schema.js'
+import { Password, Role, RoleToUser, User } from '#app/db/schema.js'
 import { db } from '#app/utils/db.server'
 import { createPassword } from '#tests/db-utils.js'
 
 async function seed() {
+	const [userRole] = await db
+		.insert(Role)
+		.values({
+			name: 'user',
+		})
+		.returning()
+	invariant(userRole, 'User role not created')
+
+	const [adminRole] = await db
+		.insert(Role)
+		.values({
+			name: 'admin',
+		})
+		.returning()
+	invariant(adminRole, 'Admin role not created')
+
 	const [user] = await db
 		.insert(User)
 		.values({
@@ -17,6 +33,11 @@ async function seed() {
 	await db.insert(Password).values({
 		userId,
 		...createPassword('passw0rd'),
+	})
+
+	await db.insert(RoleToUser).values({
+		roleId: userRole.id,
+		userId,
 	})
 }
 

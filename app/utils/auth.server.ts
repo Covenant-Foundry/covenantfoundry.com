@@ -73,7 +73,7 @@ export async function login({
 }) {
 	const user = await verifyUserPassword({ username }, password)
 	if (!user) return null
-	const session = await db
+	const [session] = await db
 		.insert(Session)
 		.values({
 			expirationDate: getSessionExpirationDate(),
