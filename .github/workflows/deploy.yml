@@ -125,7 +125,8 @@ jobs:
           path: data.db
           key:
             db-cache-schema_${{ hashFiles('./app/db/schema.ts')
-            }}-migrations_${{ hashFiles('./migrations/*.sql') }}
+            }}-migrations_${{ hashFiles('./migrations/*.sql') }}-seed_${{
+            hashFiles('./drizzle/seeds/**/*.ts') }}
 
       - name: 🌱 Seed Database
         if: steps.db-cache.outputs.cache-hit != 'true'
