@@ -162,7 +162,9 @@ jobs:
         env:
           TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
           TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
-        run: npm run db:migrate
+        run: |
+          npm ci
+          npm run db:migrate
 
       - name: 🚀 Deploy Production
         if: ${{ github.ref == 'refs/heads/main' }}
