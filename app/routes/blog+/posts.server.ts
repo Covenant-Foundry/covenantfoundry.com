@@ -1,5 +1,7 @@
 export type Frontmatter = {
-	name: string
+	title: string
+	description: string
+	published: string // YYYY-MM-DD
 }
 
 export type PostMeta = {
@@ -8,27 +10,26 @@ export type PostMeta = {
 }
 
 export const getPosts = async (): Promise<PostMeta[]> => {
-	const modules = import.meta.glob<{ frontmatter: Frontmatter }>(
-		'../routes/blog.*.(mdx|md)',
-		{ eager: true },
-	)
+	const modules = import.meta.glob<{ frontmatter: Frontmatter }>('./*.mdx', {
+		eager: true,
+	})
 	const build = await import('virtual:remix/server-build')
 	const posts = Object.entries(modules).map(([file, post]) => {
-		const id = file.replace('../', '').replace(/\.mdx?$/, '')
-
-		if (build.routes[id] === undefined) throw new Error(`No route for ${id}`)
+		let id = file.replace('./', 'routes/blog+/').replace(/\.mdx$/, '')
+		let slug = build.routes[id]?.path
+		if (slug === undefined) throw new Error(`No route for ${id}`)
 
 		return {
-			slug: '/' + build.routes[id].path,
+			slug,
 			frontmatter: post.frontmatter,
 		}
 	})
-	return sortBy(posts, (post) => post.frontmatter.name, 'desc')
+	return sortBy(posts, (post) => post.frontmatter.published, 'desc')
 }
 
 function sortBy<T>(
 	arr: T[],
-	key: (item: T) => unknown,
+	key: (item: T) => any,
 	dir: 'asc' | 'desc' = 'asc',
 ) {
 	return arr.sort((a, b) => {
