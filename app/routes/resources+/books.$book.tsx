@@ -51,7 +51,7 @@ export default function BookPage() {
 	const Content = useMemo(() => getMDXComponent(content.code), [content.code])
 	const tags = book.tags ? book.tags.split(',') : []
 	return (
-		<Prose className="mx-auto max-w-4xl py-10">
+		<Prose className="container mx-auto max-w-4xl py-10">
 			<div className="flex flex-row gap-10">
 				<img
 					src={`/images/${book.imageId}`}
