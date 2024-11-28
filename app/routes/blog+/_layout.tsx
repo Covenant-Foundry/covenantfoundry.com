@@ -15,7 +15,7 @@ export default function ArticleLayout() {
 		<>
 			<Prose className="container mx-auto mb-[25vh] max-w-4xl py-10">
 				<p className="text-muted-foreground">
-					<Link to="/articles" className="no-underline hover:underline">
+					<Link to="/blog" className="no-underline hover:underline">
 						« Back to Articles
 					</Link>
 				</p>

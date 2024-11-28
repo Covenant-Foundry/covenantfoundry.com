@@ -1,6 +1,7 @@
 import { json, type MetaFunction } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { Prose } from '#app/components/prose'
+import { Icon } from '#app/components/ui/icon.js'
 import { getPosts } from './blog+/posts.server'
 
 export const meta: MetaFunction = () => {
@@ -27,7 +28,12 @@ export default function ArticlesPage() {
 
 	return (
 		<Prose className="container mx-auto max-w-4xl py-10">
-			<h1>Articles</h1>
+			<div className="flex items-start justify-between">
+				<h1>Articles</h1>
+				<Link to="/blog/rss.xml" className="text-3xl md:text-5xl">
+					<Icon name="rss" />
+				</Link>
+			</div>
 			<p>
 				<ul>
 					{posts.map((post) => (
