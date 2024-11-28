@@ -11,6 +11,7 @@ export const loader: LoaderFunction = async () => {
 		id: blogUrl,
 		title: 'Covenant Foundry Blog',
 		description: 'Building companies and Christian community.',
+		image: 'https://covenantfoundry.com/img/logo.png',
 		link: blogUrl,
 		language: 'en',
 		updated: posts[0] ? parseISO(posts[0].frontmatter.published) : new Date(),
