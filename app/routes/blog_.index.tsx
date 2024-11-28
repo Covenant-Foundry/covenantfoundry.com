@@ -5,10 +5,14 @@ import { getPosts } from './blog+/posts.server'
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: 'Blog' },
+		{ title: 'Blog | Covenant Foundry' },
 		{
 			name: 'description',
 			content: 'The latest articles from Covenant Foundry.',
+		},
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
 		},
 	]
 }

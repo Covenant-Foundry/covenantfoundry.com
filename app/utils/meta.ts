@@ -30,5 +30,10 @@ export const formatFrontmatterToRemixMeta = (frontmatter: any) => () => {
 				frontmatter.description ??
 				DEFAULT_DESCRIPTION,
 		},
+		{
+			property: 'og:image',
+			content:
+				frontmatter['og:image'] ?? 'https://covenantfoundry.com/img/logo.png',
+		},
 	]
 }

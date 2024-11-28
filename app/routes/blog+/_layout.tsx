@@ -1,5 +1,14 @@
-import { Link, Outlet } from '@remix-run/react'
+import { Link, type MetaFunction, Outlet } from '@remix-run/react'
 import { Prose } from '#app/components/prose'
+
+export const meta: MetaFunction = () => {
+	return [
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
+	]
+}
 
 export default function ArticleLayout() {
 	return (

@@ -60,17 +60,7 @@ export const links: LinksFunction = () => {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-	return [
-		{ title: data ? 'Covenant Foundry' : 'Error | Covenant Foundry' },
-		{
-			name: 'description',
-			content: `A community of Christians pursuing faithful stewardship of our time, talents, and treasures via entrepreneurship.`,
-		},
-		{
-			property: 'og:image',
-			content: 'https://covenantfoundry.com/img/logo.png',
-		},
-	]
+	return [{ title: data ? 'Covenant Foundry' : 'Error | Covenant Foundry' }]
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
