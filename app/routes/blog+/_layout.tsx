@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
 export default function ArticleLayout() {
 	return (
 		<>
-			<Prose className="container mx-auto max-w-4xl py-10">
+			<Prose className="container mx-auto mb-[25vh] max-w-4xl py-10">
 				<p className="text-muted-foreground">
 					<Link to="/articles" className="no-underline hover:underline">
 						« Back to Articles

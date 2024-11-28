@@ -17,10 +17,15 @@ export function Headline({
 		<div className="mb-10 flex flex-col gap-4">
 			<h1 className="m-0">{title}</h1>
 			<div className="flex items-center justify-between gap-2">
-				<div className="text-sm font-bold md:text-lg">
-					{formattedDate} | {author}
+				<div className="flex flex-col text-sm font-bold md:flex-row md:text-lg">
+					<div>{formattedDate}</div>
+					<div className="md:ml-2 md:border-l md:border-gray-200 md:pl-2">
+						{author}
+					</div>
 				</div>
-				{aiLevel !== undefined && <AILevel level={aiLevel} />}
+				<div className="flex-shrink-0">
+					{aiLevel !== undefined && <AILevel level={aiLevel} />}
+				</div>
 			</div>
 		</div>
 	)
