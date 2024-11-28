@@ -256,7 +256,7 @@ function Logo() {
 				alt="Covenant Foundry logo"
 				className="h-16 md:h-24"
 			/>
-			<div className="text-3xl font-bold md:text-5xl">Covenant Foundry</div>
+			<h1 className="text-3xl font-bold md:text-5xl">Covenant Foundry</h1>
 		</Link>
 	)
 }
