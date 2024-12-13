@@ -11,6 +11,10 @@ export const meta: MetaFunction = () => {
 			name: 'description',
 			content: 'How we use AI on Covenant Foundry.',
 		},
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
 	]
 }
 

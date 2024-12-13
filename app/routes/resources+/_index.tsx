@@ -6,6 +6,10 @@ export const meta: MetaFunction = () => {
 	return [
 		{ title: 'Resources' },
 		{ name: 'description', content: 'Resources for Christian entrepreneurs.' },
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
 	]
 }
 

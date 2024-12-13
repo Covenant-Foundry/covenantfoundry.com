@@ -6,10 +6,37 @@ import { db } from '#app/utils/db.server.js'
 import { ResourceCard } from '../../components/resources/resource-card'
 import { ResourceGrid } from '../../components/resources/resource-grid'
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	const allCommunities = Object.values(data?.communitiesByCategory ?? {}).flat()
+
 	return [
 		{ title: 'Communities for Christian Entrepreneurs' },
 		{ description: 'Communities for Christian Entrepreneurs.' },
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
+		{
+			'script:ld+json': {
+				'@context': 'https://schema.org',
+				'@type': 'ItemList',
+				name: 'Communities for Christian Entrepreneurs',
+				description:
+					'Curated collection of communities for Christian entrepreneurs and business leaders.',
+				numberOfItems: allCommunities.length,
+				itemListElement: allCommunities.map((community, index) => ({
+					'@type': 'ListItem',
+					position: index + 1,
+					item: {
+						'@type': 'Organization',
+						name: community.title,
+						description: community.description,
+						image: `/images/${community.imageId}`,
+						url: community.link,
+					},
+				})),
+			},
+		},
 	]
 }
 

@@ -12,6 +12,10 @@ export const meta: MetaFunction = () => {
 			content:
 				'A good co-founder, aligned with your Christian worldview, can make all the difference for a successful business.',
 		},
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
 	]
 }
 

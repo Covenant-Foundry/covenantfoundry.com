@@ -26,10 +26,24 @@ export const handle: SEOHandle = {
 	}),
 }
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	return [
 		{ title: 'Books for Christian Entrepreneurs' },
 		{ description: 'Books for Christian Entrepreneurs.' },
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
+		{
+			'script:ld+json': {
+				book: {
+					title: data?.book.title,
+					description: data?.book.description,
+					image: `/images/${data?.book.imageId}`,
+					url: data?.book.link,
+				},
+			},
+		},
 	]
 }
 

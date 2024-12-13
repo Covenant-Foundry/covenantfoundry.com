@@ -5,10 +5,37 @@ import { db } from '#app/utils/db.server.js'
 import { ResourceCard } from '../../components/resources/resource-card'
 import { ResourceGrid } from '../../components/resources/resource-grid'
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+	const allBooks = Object.values(data?.booksByCategory ?? {}).flat()
+
 	return [
 		{ title: 'Books for Christian Entrepreneurs' },
 		{ description: 'Books for Christian Entrepreneurs.' },
+		{
+			property: 'og:image',
+			content: 'https://covenantfoundry.com/img/logo.png',
+		},
+		{
+			'script:ld+json': {
+				'@context': 'https://schema.org',
+				'@type': 'ItemList',
+				name: 'Books for Christian Entrepreneurs',
+				description:
+					'Curated collection of books for Christian entrepreneurs and business leaders.',
+				numberOfItems: allBooks.length,
+				itemListElement: allBooks.map((book, index) => ({
+					'@type': 'ListItem',
+					position: index + 1,
+					item: {
+						'@type': 'Book',
+						name: book.title,
+						description: book.description,
+						image: `/images/${book.imageId}`,
+						url: `/resources/books/${book.slug}`,
+					},
+				})),
+			},
+		},
 	]
 }
 
