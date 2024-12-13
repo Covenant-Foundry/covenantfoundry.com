@@ -1,5 +1,7 @@
+import { tz } from '@date-fns/tz'
 import { format, parseISO } from 'date-fns'
 import { AILevel } from '#app/components/ai-level.js'
+import { useHints } from '#app/utils/client-hints.js'
 
 export function Headline({
 	title,
@@ -12,7 +14,10 @@ export function Headline({
 	published: string
 	aiLevel?: 0 | 1 | 2 | 3 | 4 | 5
 }) {
-	const formattedDate = format(parseISO(published), 'MMMM d, yyyy')
+	const { timeZone } = useHints()
+	const formattedDate = format(parseISO(published), 'MMMM d, yyyy', {
+		in: tz(timeZone),
+	})
 	return (
 		<div className="mb-10 flex flex-col gap-4">
 			<h1 className="m-0">{title}</h1>
