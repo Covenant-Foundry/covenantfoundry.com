@@ -1,7 +1,9 @@
 import { useInputControl } from '@conform-to/react'
 import { REGEXP_ONLY_DIGITS_AND_CHARS, type OTPInputProps } from 'input-otp'
-import React, { useId } from 'react'
+import React, { useId, useState } from 'react'
+import { Button } from './ui/button.tsx'
 import { Checkbox, type CheckboxProps } from './ui/checkbox.tsx'
+import { Icon } from './ui/icon.tsx'
 import {
 	InputOTP,
 	InputOTPGroup,
@@ -196,6 +198,58 @@ export function CheckboxField({
 			</div>
 			<div className="px-4 pb-3 pt-1">
 				{errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+			</div>
+		</div>
+	)
+}
+
+export function ImageField({
+	labelProps,
+	inputProps,
+	imageProps,
+	errors,
+	className,
+}: {
+	labelProps: React.LabelHTMLAttributes<HTMLLabelElement>
+	inputProps: React.InputHTMLAttributes<HTMLInputElement>
+	imageProps: React.ImgHTMLAttributes<HTMLImageElement>
+	errors?: ListOfErrors
+	className?: string
+}) {
+	const { src } = imageProps
+	const fallbackId = useId()
+	const id = inputProps.id ?? fallbackId
+	const errorId = errors?.length ? `${id}-error` : undefined
+
+	const [newImageSrc, setNewImageSrc] = useState<string | null>(null)
+
+	return (
+		<div className={className}>
+			<img {...imageProps} src={newImageSrc ?? src} />
+			<ErrorList errors={errors} id={errorId} />
+			<div className="flex justify-center p-4">
+				<input
+					{...inputProps}
+					accept="image/*"
+					className="sr-only"
+					required
+					tabIndex={newImageSrc ? -1 : 0}
+					onChange={(e) => {
+						const file = e.currentTarget.files?.[0]
+						if (file) {
+							const reader = new FileReader()
+							reader.onload = (event) => {
+								setNewImageSrc(event.target?.result?.toString() ?? null)
+							}
+							reader.readAsDataURL(file)
+						}
+					}}
+				/>
+				<Button asChild className="cursor-pointer">
+					<label {...labelProps} htmlFor={id}>
+						<Icon name="pencil-1">Change</Icon>
+					</label>
+				</Button>
 			</div>
 		</div>
 	)

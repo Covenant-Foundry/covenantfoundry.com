@@ -1,6 +1,6 @@
 import { invariantResponse } from '@epic-web/invariant'
 import { type LoaderFunctionArgs } from '@remix-run/node'
-import { eq } from 'drizzle-orm'
+import { eq, type InferSelectModel } from 'drizzle-orm'
 import { Image } from '#app/db/schema.js'
 import { db } from '#app/utils/db.server.ts'
 
@@ -21,4 +21,8 @@ export async function loader({ params }: LoaderFunctionArgs) {
 			'Cache-Control': 'public, max-age=31536000, immutable',
 		},
 	})
+}
+
+export function urlForImage(imageId: InferSelectModel<typeof Image>['id']) {
+	return `/images/${imageId}`
 }

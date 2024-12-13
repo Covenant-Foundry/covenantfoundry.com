@@ -39,6 +39,10 @@ async function seed() {
 		roleId: userRole.id,
 		userId,
 	})
+	await db.insert(RoleToUser).values({
+		roleId: adminRole.id,
+		userId,
+	})
 }
 
 seed()
